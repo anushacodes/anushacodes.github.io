@@ -9,8 +9,9 @@
             --bg-color: rgb(244, 246, 247);
             --text-color: rgb(4, 7, 16);
             --subtext-color: rgb(126, 138, 157);
-            --card-bg: rgb(214, 219, 226);
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --card-bg: rgb(247, 249, 250);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.06);
             --highlight-color: rgb(70, 90, 126);
             --transition-speed: 0.3s;
             --transition-timing: cubic-bezier(0.2, 0, 0.2, 1);
@@ -19,8 +20,9 @@
         .dark-mode {
             --bg-color: rgb(4, 7, 16);
             --text-color: rgb(214, 219, 226);
-            --card-bg: rgb(26, 32, 44);
-            --shadow-color: rgba(0, 0, 0, 0.3);
+            --card-bg: rgb(16, 20, 28);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.2);
             --highlight-color: rgb(120, 160, 220);
         }
 
@@ -42,7 +44,7 @@
         }
 
         .container {
-            max-width: 700px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -77,7 +79,7 @@
             display: flex;
             justify-content: center;
             padding: 10px 0;
-            border-bottom: 1px solid var(--subtext-color);
+            border-bottom: 1px solid rgba(126, 138, 157, 0.2);
             position: sticky;
             top: 60px;
             background-color: var(--bg-color);
@@ -108,7 +110,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 40px 0 20px;
+            margin: 60px 0 40px;
             text-align: center;
         }
 
@@ -117,8 +119,9 @@
             height: 150px;
             border-radius: 50%;
             overflow: hidden;
-            margin-bottom: 20px;
-            border: 0.5px solid var(--text-color);
+            margin-bottom: 25px;
+            border: 0.5px solid var(--card-border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             transition: border-color var(--transition-speed) var(--transition-timing);
         }
 
@@ -129,22 +132,24 @@
         }
 
         .profile h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 12px;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
         .profile p {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 15px;
             transition: color var(--transition-speed) var(--transition-timing);
+            line-height: 1.7;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 15px;
+            margin-top: 20px;
             gap: 30px; 
         }
 
@@ -183,18 +188,19 @@
         .resume-btn {
             background-color: var(--text-color);
             color: var(--bg-color);
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
             font-weight: 500;
             text-decoration: none;
             transition: background-color var(--transition-speed) var(--transition-timing),
                         color var(--transition-speed) var(--transition-timing),
-                        opacity 0.2s;
+                        transform 0.2s ease;
         }
 
         .resume-btn:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .section {
@@ -204,48 +210,67 @@
         }
 
         .section-title {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
+            font-size: 1.7rem;
+            margin-bottom: 40px;
             text-align: center;
             position: relative;
             transition: color var(--transition-speed) var(--transition-timing);
+            font-weight: 600;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 50px;
+            width: 40px;
             height: 3px;
-            background-color: var(--text-color);
-            margin: 10px auto;
+            background-color: var(--highlight-color);
+            margin: 12px auto;
             transition: background-color var(--transition-speed) var(--transition-timing);
         }
 
+        /* Updated Projects Section */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-            gap: 30px; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
             margin-top: 40px;
         }
 
         .project-card {
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px var(--shadow-color);
+            box-shadow: 0 6px 12px var(--shadow-color);
             display: flex;
             flex-direction: column;
             height: 100%;
             cursor: pointer;
-            transition: transform 0.2s ease, 
-                        box-shadow 0.2s ease,
+            transition: transform 0.25s ease, 
+                        box-shadow 0.25s ease,
                         background-color var(--transition-speed) var(--transition-timing);
-            margin: 0 5px; 
+            border: 1px solid var(--card-border);
+            position: relative;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--highlight-color), rgba(70, 90, 126, 0.5));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px var(--shadow-color);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px var(--shadow-color);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
         }
 
         .project-card-link {
@@ -254,91 +279,64 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            padding: 22px;
         }
 
-        .project-logo {
-            width: 100%;
-            height: 130px;
-            padding: 0;
-            display: block;
-            background-color: var(--subtext-color);
-            transition: background-color var(--transition-speed) var(--transition-timing);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-logo img {
-            width: 100%;
-            height: 100%;
-            border-radius: 0;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .project-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px var(--shadow-color);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            cursor: pointer;
-            transition: transform 0.2s ease, 
-                        box-shadow 0.2s ease,
-                        background-color var(--transition-speed) var(--transition-timing);
-            margin: 0 5px;
+        .project-icon {
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--highlight-color);
         }
 
         .project-content {
-            padding: 20px;
-            flex-grow: 0.9;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
         .project-title {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
         .project-description {
             font-size: 0.9rem; 
-            line-height: 1.5;
+            line-height: 1.6;
             flex-grow: 1;
             transition: color var(--transition-speed) var(--transition-timing);
+            color: var(--subtext-color);
         }
 
         .education-item, .experience-item {
-            margin-bottom: 25px;
-            padding: 15px;
+            margin-bottom: 30px;
+            padding: 25px;
             background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px var(--shadow-color);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--shadow-color);
+            border: 1px solid var(--card-border);
             transition: background-color var(--transition-speed) var(--transition-timing),
                         box-shadow var(--transition-speed) var(--transition-timing);
         }
 
         .publication-item {
-            margin-bottom: 25px;
-            padding: 15px;
+            margin-bottom: 30px;
+            padding: 25px;
             background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px var(--shadow-color);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--shadow-color);
+            border: 1px solid var(--card-border);
             cursor: pointer;
-            transition: transform 0.1s ease, 
-                        box-shadow 0.1s ease,
+            transition: transform 0.2s ease, 
+                        box-shadow 0.2s ease,
                         background-color var(--transition-speed) var(--transition-timing);
         }
 
         .publication-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px var(--shadow-color);
+            box-shadow: 0 12px 24px var(--shadow-color);
         }
 
         .publication-link {
@@ -348,31 +346,32 @@
         }
 
         .education-item h3, .experience-item h3, .publication-item h3 {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             transition: color var(--transition-speed) var(--transition-timing);
+            font-size: 1.2rem;
         }
 
         .date {
             color: var(--subtext-color);
             font-style: italic;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
             display: block;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
         footer {
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 1px solid var(--subtext-color);
-            font-size: 0.7rem;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(126, 138, 157, 0.15);
+            font-size: 0.8rem;
             transition: border-color var(--transition-speed) var(--transition-timing),
                         color var(--transition-speed) var(--transition-timing);
         }
 
         .content-section {
             font-size: 0.9rem;
-            margin-top: 12px;
+            margin-top: 15px;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
@@ -382,23 +381,36 @@
         }
 
         .bullet-list {
-            list-style-type: disc;
-            padding-left: 20px;
+            list-style-type: none;
+            padding-left: 5px;
             margin: 10px 0;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
         .bullet-list li {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             line-height: 1.5;
             transition: color var(--transition-speed) var(--transition-timing);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .bullet-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--highlight-color);
         }
 
         .section-subtitle {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--highlight-color);
-            margin: 12px 0 8px 0;
+            margin: 14px 0 10px 0;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
@@ -408,17 +420,27 @@
         }
 
         .authors {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 8px;
             transition: color var(--transition-speed) var(--transition-timing);
         }
 
         .publication-venue {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-style: italic;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             transition: color var(--transition-speed) var(--transition-timing);
         }
+
+        /* Project Icon Classes */
+        .icon-rag:before { content: "📚"; }
+        .icon-scraper:before { content: "🔍"; }
+        .icon-books:before { content: "📖"; }
+        .icon-transformer:before { content: "🤖"; }
+        .icon-optimizer:before { content: "📈"; }
+        .icon-ml:before { content: "🧠"; }
+        .icon-spotify:before { content: "🎵"; }
+        .icon-wordle:before { content: "🎮"; }
 
         @media (max-width: 768px) {
             .projects-grid {
@@ -432,6 +454,10 @@
             
             nav a {
                 margin: 5px;
+            }
+
+            .education-item, .experience-item, .publication-item {
+                padding: 20px;
             }
         }
     </style>
@@ -484,9 +510,7 @@
 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/PaperSage-your-personal-research-assistant" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/rag-app.png" alt="rag app">
-                        </div>
+                        <div class="project-icon icon-rag"></div>
                         <div class="project-content">
                             <h3 class="project-title">PaperSage - your personal research assistant</h3>
                             <p class="project-description">a RAG system using LangChain, ChromaDB, and Ollama for querying PDF documents efficiently.</p>
@@ -496,9 +520,7 @@
 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/AI-web-scraper-with-LLM-parsing-using-Streamlit" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/web-scraper.png" alt="Streamlit app">
-                        </div>
+                        <div class="project-icon icon-scraper"></div>
                         <div class="project-content">
                             <h3 class="project-title">Web Scraper with LLM Parsing</h3>
                             <p class="project-description"> A streamlit-based web app that allows users to scrape content from any 
@@ -509,9 +531,7 @@
 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/Personalised-Book-Recommendation-Engine" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/books2023.jpg" alt="Book Recommendation system">
-                        </div>
+                        <div class="project-icon icon-books"></div>
                         <div class="project-content">
                             <h3 class="project-title">Personalized book recommendation engine</h3>
                             <p class="project-description">A retrieval based recommendation system with collaborative filtering and two tower architecture. </p>
@@ -521,9 +541,7 @@
 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/grokking-transformers" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/Transformer-smaller-pic.png" alt="Language Model">
-                        </div>
+                        <div class="project-icon icon-transformer"></div>
                         <div class="project-content">
                             <h3 class="project-title">Transformer<i> de zéro </i>(from scratch)</h3>
                             <p class="project-description">Developed a transformer-based language model trained on multilingual (french to english) corpus.</p>
@@ -533,9 +551,7 @@
                 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/grokking-optimizers" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/sgd_momentum_3d.gif" alt="SGD gif">
-                        </div>
+                        <div class="project-icon icon-optimizer"></div>
                         <div class="project-content">
                             <h3 class="project-title">Grokking Optimizers</h3>
                             <p class="project-description">A deep-dive into optimization alogrithms by implementing and visualising them in 2D and 3D.</p>
@@ -545,9 +561,7 @@
                 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/ml-from-scratch" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/ml.jpg" alt="ml">
-                        </div>
+                        <div class="project-icon icon-ml"></div>
                         <div class="project-content">
                             <h3 class="project-title">ML from Scratch</h3>
                             <p class="project-description">Implementing popular ML algorithms using numpy for learning purposes.</p>
@@ -557,9 +571,7 @@
 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/Spotify-Topic-Modeling" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/spotify.png" alt="Spotify">
-                        </div>
+                        <div class="project-icon icon-spotify"></div>
                         <div class="project-content">
                             <h3 class="project-title">Spotify Topic Modeling</h3>
                             <p class="project-description">This project explores song lyrics from the past 50 years to identify dominant themes using Latent Dirichlet Allocation (LDA), and a recsys built using PCA and t-SNE. </p>
@@ -569,9 +581,7 @@
                 
                 <div class="project-card">
                     <a href="https://github.com/anushacodes/Wordle-game" class="project-card-link" target="_blank">
-                        <div class="project-logo">
-                            <img src="assets/wordlee.gif?height=50&width=40" alt="wordle game">
-                        </div>
+                        <div class="project-icon icon-wordle"></div>
                         <div class="project-content">
                             <h3 class="project-title">Wordle Game</h3>
                             <p class="project-description">A simple wordle game created entirely in java.</p>
