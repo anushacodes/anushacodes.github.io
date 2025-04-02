@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anusha N. | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f5f0e8; /* Beige base color */
+            --text-color: rgb(4, 7, 16);
+            --text-gradient: linear-gradient(90deg, #2d3748, #4a5568);
+            --heading-gradient: linear-gradient(90deg, #3a1c71, #d76d77);
+            --subtext-color: rgb(126, 138, 157);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.06);
+            --highlight-color: rgb(70, 90, 126);
+            --transition-speed: 0.3s;
+            --transition-timing: cubic-bezier(0.2, 0, 0.2, 1);
+            --font-weight: 500;
+            --font-size: 14px;
+            --line-height: 1.8;
+            --nav-bg: rgba(245, 240, 232, 0.85);
+        }
+
+        .dark-mode {
+            --bg-color: #121212; /* Dark base color */
+            --text-color: rgba(255, 255, 255, 0.9);
+            --text-gradient: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            --heading-gradient: linear-gradient(90deg, #a18cd1, #fbc2eb);
+            --subtext-color: rgba(255, 255, 255, 0.7);
+            --card-bg: rgba(30, 30, 40, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --highlight-color: rgb(120, 160, 220);
+            --nav-bg: rgba(18, 18, 18, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        @keyframes blob-movement {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(5px, -5px) scale(1.05); }
+            66% { transform: translate(-5px, 5px) scale(0.95); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: var(--line-height);
+            font-size: var(--font-size);
+            font-weight: var(--font-weight);
+            transition: background-color var(--transition-speed) var(--transition-timing),
+                        color var(--transition-speed) var(--transition-timing);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Grainy texture overlay - only for light mode */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Blob decorations - Light Mode */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(128, 0, 255, 0.1) 0%, rgba(128, 0, 255, 0) 25%),
+                radial-gradient(circle at 80% 20%, rgba(107, 197, 248, 0.1) 0%, rgba(107, 197, 248, 0) 25%),
+                radial-gradient(circle at 40% 70%, rgba(128, 0, 255, 0.08) 0%, rgba(128, 0, 255, 0) 30%),
+                radial-gradient(circle at 70% 90%, rgba(107, 197, 248, 0.08) 0%, rgba(107, 197, 248, 0) 30%);
+            pointer-events: none;
+            z-index: 0;
+            animation: blob-movement 20s ease-in-out infinite;
+        }
+
+        /* Dark Mode Gradient and Blobs */
+        .dark-mode {
+            background: linear-gradient(135deg, #121212, #1a1a2e, #16213e);
+        }
+
+        /* Remove the texture for dark mode */
+        .dark-mode::before {
+            opacity: 0;
+        }
+
+        .dark-mode::after {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.2) 0%, rgba(138, 43, 226, 0) 35%),
+                radial-gradient(circle at 80% 20%, rgba(72, 61, 139, 0.2) 0%, rgba(72, 61, 139, 0) 35%),
+                radial-gradient(circle at 40% 70%, rgba(106, 90, 205, 0.15) 0%, rgba(106, 90, 205, 0) 40%),
+                radial-gradient(circle at 70% 90%, rgba(65, 105, 225, 0.15) 0%, rgba(65, 105, 225, 0) 40%);
+            animation: blob-movement 25s ease-in-out infinite;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: transparent;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+            z-index: 3;
+            position: relative;
+            padding: 0;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        nav {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(126, 138, 157, 0.2);
+            position: sticky;
+            top: 60px;
+            z-index: 99;
+            overflow-x: auto;
+            white-space: nowrap;
+            transition: border-color var(--transition-speed) var(--transition-timing);
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--heading-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 80%;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a.active::after {
+            width: 80%;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 120px 0 60px;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: border-color var(--transition-speed) var(--transition-timing);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .profile p {
+            font-size: 1rem;
+            max-width: 650px;
+            margin: 0 auto 25px;
+            line-height: 1.8;
+            color: var(--subtext-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 35px; 
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.2s ease, opacity var(--transition-speed) var(--transition-timing);
+        }
+
+        .social-links img:hover {
+            transform: scale(1.15);
+        }
+
+        .icon-container {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        .icon-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity var(--transition-speed) var(--transition-timing);
+        }
+
+        .resume-btn {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color var(--transition-speed) var(--transition-timing),
+                        transform 0.2s ease,
+                        box-shadow 0.2s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode .resume-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .resume-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .section {
+            padding: 80px 0; 
+            scroll-margin-top: 150px; 
+            margin-bottom: 30px; 
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            font-weight: 700;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--heading-gradient);
+            margin: 15px auto;
+            transition: background-color var(--transition-speed) var(--transition-timing);
+        }
+
+        /* Updated Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 30px; 
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            cursor: pointer;
+            transition: transform 0.25s ease, 
+                        box-shadow 0.25s ease,
+                        background-color var(--transition-speed) var(--transition-timing);
+            border: 1px solid var(--card-border);
+            position: relative;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--heading-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px var(--shadow-color);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        .project-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 28px;
+        }
+
+        .project-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--highlight-color);
+        }
+
+        .project-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.4;
+        }
+
+        .project-description {
+            font-size: 0.95rem; 
+            line-height: 1.7;
+            flex-grow: 1;
+            color: var(--subtext-color);
+        }
+
+        .education-item, .experience-item {
+            margin-bottom: 35px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px var(--shadow-color);
+            border: 1px solid var(--card-border);
+            transition: background-color var(--transition-speed) var(--transition-timing),
+                        box-shadow var(--transition-speed) var(--transition-timing);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .publication-item {
+            margin-bottom: 35px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px var(--shadow-color);
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+            transition: transform 0.2s ease, 
+                        box-shadow 0.2s ease,
+                        background-color var(--transition-speed) var(--transition-timing);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .publication-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px var(--shadow-color);
+        }
+
+        .publication-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .education-item h3, .experience-item h3, .publication-item h3 {
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .date {
+            color: var(--subtext-color);
+            font-style: italic;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+            border-top: 1px solid rgba(126, 138, 157, 0.15);
+            font-size: 0.85rem;
+            color: var(--subtext-color);
+        }
+
+        .content-section {
+            font-size: 0.95rem;
+            margin-top: 20px;
+            line-height: 1.7;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+        }
+
+        .bullet-list {
+            list-style-type: none;
+            padding-left: 5px;
+            margin: 15px 0;
+        }
+
+        .bullet-list li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .bullet-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--highlight-color);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 18px 0 12px 0;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .publication-details {
+            margin: 18px 0;
+        }
+
+        .authors {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .publication-venue {
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 18px;
+            color: var(--subtext-color);
+        }
+
+        /* Project Icon Classes */
+        .icon-rag:before { content: "📚"; }
+        .icon-scraper:before { content: "🔍"; }
+        .icon-books:before { content: "📖"; }
+        .icon-transformer:before { content: "🤖"; }
+        .icon-optimizer:before { content: "📈"; }
+        .icon-ml:before { content: "🧠"; }
+        .icon-spotify:before { content: "🎵"; }
+        .icon-wordle:before { content: "🎮"; }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+            }
+            
+            nav a {
+                margin: 5px;
+            }
+
+            .education-item, .experience-item, .publication-item {
+                padding: 25px;
+            }
+
+            .profile h1 {
+                font-size: 2rem;
+            }
+
+            .profile p {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-container">
+            <button class="theme-toggle" id="themeToggle">
+                <img id="lightModeIcon" src="assets/sun.svg" alt="Light Mode" style="display: none;">
+                <img id="darkModeIcon" src="assets/moon.svg" alt="Dark Mode">
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="profile">
+            <div class="profile-image">
+                <img src="assets/pp.jpg" alt="Profile Picture">
+            </div>
+            <h1>Anusha Nandy</h1>
+            <p>First year Master's student specializing in artificial intelligence and machine learning.
+            Currently working on projects that bridge the gap between theoretical research and practical applications</p>
+            
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/anusha-nandy/" target="_blank">
+                    <div class="icon-container">
+                        <img id="linkedinLightIcon" src="assets/linkedin-112.svg" alt="LinkedIn">
+                        <img id="linkedinDarkIcon" src="assets/linkedin-icon-dark.svg" alt="LinkedIn" style="display: none;">
+                    </div>
+                </a>
+                <a href="https://github.com/anushacodes" target="_blank">
+                    <div class="icon-container">
+                        <img id="githubLightIcon" src="./assets/github-inv.svg" alt="GitHub">
+                        <img id="githubDarkIcon" src="./assets/github-icon.svg" alt="GitHub" style="display: none;">
+                    </div>
+                </a>
+                <a href="#" class="resume-btn" target="_blank">Resume</a>
+            </div>
+        </div>
+
+        <nav id="nav">
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#education" class="nav-link">Education</a>
+            <a href="#experience" class="nav-link">Work Experience</a>
+            <a href="#publications" class="nav-link">Publications</a>
+        </nav>
+
+        <section id="projects" class="section">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/PaperSage-your-personal-research-assistant" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-rag"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">PaperSage - your personal research assistant</h3>
+                            <p class="project-description">a RAG system using LangChain, ChromaDB, and Ollama for querying PDF documents efficiently.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/AI-web-scraper-with-LLM-parsing-using-Streamlit" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-scraper"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">Web Scraper with LLM Parsing</h3>
+                            <p class="project-description"> A streamlit-based web app that allows users to scrape content from any 
+                                website, extract meaningful information, and analyze it using OpenAI's GPT models.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/Personalised-Book-Recommendation-Engine" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-books"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">Personalized book recommendation engine</h3>
+                            <p class="project-description">A retrieval based recommendation system with collaborative filtering and two tower architecture. </p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/grokking-transformers" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-transformer"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">Transformer<i> de zéro </i>(from scratch)</h3>
+                            <p class="project-description">Developed a transformer-based language model trained on multilingual (french to english) corpus.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/grokking-optimizers" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-optimizer"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">Grokking Optimizers</h3>
+                            <p class="project-description">A deep-dive into optimization alogrithms by implementing and visualising them in 2D and 3D.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/ml-from-scratch" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-ml"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">ML from Scratch</h3>
+                            <p class="project-description">Implementing popular ML algorithms using numpy for learning purposes.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/Spotify-Topic-Modeling" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-spotify"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">Spotify Topic Modeling</h3>
+                            <p class="project-description">This project explores song lyrics from the past 50 years to identify dominant themes using Latent Dirichlet Allocation (LDA), and a recsys built using PCA and t-SNE. </p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="project-card">
+                    <a href="https://github.com/anushacodes/Wordle-game" class="project-card-link" target="_blank">
+                        <div class="project-icon icon-wordle"></div>
+                        <div class="project-content">
+                            <h3 class="project-title">Wordle Game</h3>
+                            <p class="project-description">A simple wordle game created entirely in java.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="education-item">
+                <h3>Master's in Data Science</h3>
+                <span class="date">2024 - Present</span>
+                <p>University of Alabama at Birmingham</p>
+                <p><b>Coursework:</b> ML; DL; Data Mining; Foundations of Data Science; Advanced Algorithms
+                </p>
+            </div>
+            <div class="education-item">
+                <h3>Bachelor's of Computer Science in Artificial Intelligence</h3>
+                <span class="date">2020 - 2024</span>
+                <p>Mahindra University</p>
+                <p>Focused on AI and Data Science.</p>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="experience-item">
+                <h3>ML Intern</h3>
+                <span class="date">Summer 2023</span>
+                <p>Indian Oil Company</p>
+                <div class="content-section">
+                    <div class="section-subtitle">Key Achievements:</div>
+                    <ul class="bullet-list">
+                        <li>Developed a Python Web Scraper to download public data, including 10,000+ labelled images of Indian vehicles, enriching internal data and increasing research efficiency by over 50%</li>
+                        <li>Fine-tuned YOLOv7 via transfer learning, increasing precision by 20% for diverse vehicle detection</li>
+                        <li>Optimized and converted the model to TFLite, enabling real-time monitoring on Android with 30% faster inference</li>
+                        <li>Augmented system capabilities through customized integration with Mediapipe</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="section">
+            <h2 class="section-title">Publications</h2>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10466291" class="publication-link" target="_blank">
+                <div class="publication-item">
+                    <h3>Title of Research Paper</h3>
+                    <span class="date">2023</span>
+                    
+                    <div class="publication-details">
+                        <p class="authors">Anish N, Dhathri M, Yashwanth R, ShashiKanth; <b>Anusha N</b>; Varnika B.</p>
+                        <p class="publication-venue"><b>Published in:</b> 2023 26th ACIS International Winter Conference on Software Engineering, Artificial Intelligence, Networking and Parallel/Distributed Computing (SNPD-Winter)</p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <div class="section-subtitle">Research Summary:</div>
+                        <ul class="bullet-list">
+                            <li>Developed a deep learning approach to predict collective emotions in group images by analyzing individual expressions</li>
+                            <li>Optimized face detection models (YOLOv3, HaarCascade, SSD) and pre-trained emotion recognition models (DeepFace, FER) on a custom dataset</li>
+                            <li>Achieved approximately 90% top-3 accuracy in emotion recognition tasks</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+        </section>
+
+        <footer>
+            <p>© 2025 Anusha Nandy - All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Function to check scroll position and update header
+        function checkScroll() {
+            const header = document.getElementById('header');
+            const nav = document.getElementById('nav');
+            const navPosition = nav.getBoundingClientRect().top;
+            
+            if (navPosition <= 0) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        // Check scroll on page load
+        document.addEventListener('DOMContentLoaded', checkScroll);
+        
+        // Check scroll on scroll event
+        window.addEventListener('scroll', function() {
+            checkScroll();
+            
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 150)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        const favicon = document.getElementById('favicon');
+        const shortcutIcon = document.getElementById('shortcut-icon');
+
+        const themeToggle = document.getElementById('themeToggle');
+        const lightModeIcon = document.getElementById('lightModeIcon');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+        const githubLightIcon = document.getElementById('githubLightIcon');
+        const githubDarkIcon = document.getElementById('githubDarkIcon');
+        const linkedinLightIcon = document.getElementById('linkedinLightIcon');
+        const linkedinDarkIcon = document.getElementById('linkedinDarkIcon');
+        let isDarkMode = false;
+
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            
+            if (isDarkMode) {
+                darkModeIcon.style.opacity = '0';
+                setTimeout(() => {
+                    darkModeIcon.style.display = 'none';
+                    lightModeIcon.style.display = 'block';
+                    setTimeout(() => {
+                        lightModeIcon.style.opacity = '1';
+                    }, 50);
+                }, 250);
+                
+                githubLightIcon.style.opacity = '0';
+                linkedinLightIcon.style.opacity = '0';
+                
+                setTimeout(() => {
+                    githubLightIcon.style.display = 'none';
+                    linkedinLightIcon.style.display = 'none';
+                    
+                    githubDarkIcon.style.display = 'block';
+                    linkedinDarkIcon.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        githubDarkIcon.style.opacity = '1';
+                        linkedinDarkIcon.style.opacity = '1';
+                    }, 50);
+                }, 250);
+            } else {
+                lightModeIcon.style.opacity = '0';
+                setTimeout(() => {
+                    lightModeIcon.style.display = 'none';
+                    darkModeIcon.style.display = 'block';
+                    setTimeout(() => {
+                        darkModeIcon.style.opacity = '1';
+                    }, 50);
+                }, 250);
+                
+                githubDarkIcon.style.opacity = '0';
+                linkedinDarkIcon.style.opacity = '0';
+                
+                setTimeout(() => {
+                    githubDarkIcon.style.display = 'none';
+                    linkedinDarkIcon.style.display = 'none';
+                    
+                    githubLightIcon.style.display = 'block';
+                    linkedinLightIcon.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        githubLightIcon.style.opacity = '1';
+                        linkedinLightIcon.style.opacity = '1';
+                    }, 50);
+                }, 250);
+            }
+            
+            if (favicon && shortcutIcon) {
+                if (isDarkMode) {
+                    favicon.href = 'assets/favicon-dark.ico';
+                    shortcutIcon.href = 'assets/favicon-dark.ico';
+                } else {
+                    favicon.href = 'assets/favicon-light.ico';
+                    shortcutIcon.href = 'assets/favicon-light.ico';
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            lightModeIcon.style.opacity = '1';
+            darkModeIcon.style.opacity = '1';
+            githubLightIcon.style.opacity = '1';
+            githubDarkIcon.style.opacity = '1';
+            linkedinLightIcon.style.opacity = '1';
+            linkedinDarkIcon.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
