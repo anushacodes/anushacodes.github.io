@@ -1,821 +1,645 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anusha N. | Portfolio</title>
-    <link rel="icon" href="assets/favicon_io/favicon.ico" sizes="any">
-    <link rel="manifest" href="assets/site.webmanifest">
+    <meta name="description" content="Anusha Nandy - Data Scientist & Engineer.">
+    <title>Anusha Nandy | Data Scientist</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Shadows+Into+Light&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'], 
+                        hand: ['"Shadows Into Light"', 'cursive'],
+                    },
+                    colors: {
+                        background: 'var(--background)',
+                        foreground: 'var(--foreground)',
+                        muted: 'var(--muted)',
+                        border: 'var(--border)',
+                        card: 'var(--card)',
+                        accent: 'var(--accent-color)',
+                        berry: 'var(--accent-secondary)',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         :root {
-            --primary-color: #000000;
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --subtext-color: #666666;
-            --border-color: #eeeeee;
-            --shadow-color: rgba(0, 0, 0, 0.05);
-            --transition: 0.3s ease;
-            --accent-color: #444444;
+            /* Ultra-clean Light Mode */
+            --background: #ffffff;
+            --foreground: #111111;
+            --muted: #555555;
+            --border: #f0f0f0;
+            --card: #f9f9f9;
+            
+            /* Navy Blue Accent */
+            --accent-color: #1C5D99;
+            /* Berry Accent */
+            --accent-secondary: #B26E63;
         }
 
-        .dark-mode {
-            --primary-color: #ffffff;
-            --bg-color: #121212;
-            --text-color: #f5f5f5;
-            --subtext-color: #aaaaaa;
-            --border-color: #333333;
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --accent-color: #cccccc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
+        .dark {
+            /* Deep Sleek Dark Mode */
+            --background: #050505;
+            --foreground: #ffffff;
+            --muted: ##b7b4b4;
+            --border: #1a1a1a;
+            --card: #0a0a0a;
+            
+            /* Steel Blue Accent */
+            --accent-color: #93c5fd; 
+            /* Berry Light */
+            --accent-secondary: #be4d71;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            font-size: 16px;
-            transition: background-color var(--transition), color var(--transition);
+            background-color: var(--background);
+            color: var(--foreground);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.7;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* --- NAVIGATION --- */
+        .nav-pill {
+            background: rgba(var(--background), 0.7);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--border); 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-pill:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-color);
         }
 
-        header {
-            padding: 20px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background-color: var(--bg-color);
-            transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
-        }
-
-        header.scrolled {
-            box-shadow: 0 2px 10px var(--shadow-color);
-        }
-
-        header.hidden {
-            transform: translateY(-100%);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: flex-end;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            width: 24px;
-            height: 24px;
-            padding: 0;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 99;
-            background-color: var(--bg-color);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color var(--transition), border-color var(--transition), top var(--transition);
-            box-shadow: 0 2px 10px var(--shadow-color);
-        }
-
-        nav.with-header {
-            top: 60px;
-        }
-
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: var(--text-color);
-            padding: 5px 0;
-            font-weight: 500;
+        .nav-link {
             position: relative;
-            transition: color var(--transition);
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--muted);
+            transition: color 0.2s;
         }
+        
+        .nav-link:hover { color: var(--accent-color); }
 
-        nav a::after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -2px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary-color);
-            transition: width var(--transition);
+            background-color: var(--accent-secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after { width: 100%; }
+
+        .sleek-card {
+            background: var(--card);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .sleek-card:hover {
+            background: var(--background);
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
         }
 
-        nav a:hover, nav a.active {
-            color: var(--primary-color);
+        .dark .sleek-card:hover {
+            background: #0f0f0f;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.3);
         }
 
-        nav a:hover::after, nav a.active::after {
-            width: 100%;
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .profile {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 120px 0 60px;
-            text-align: center;
-        }
+        /* --- RESUME MODAL --- */
+        #resume-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        #resume-modal:not(.hidden) { opacity: 1; visibility: visible; pointer-events: auto; }
 
-        .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 10px; opacity: 0.2; }
+        
+        /* Profile Image */
+        .profile-img-container {
+            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 30px;
-            border: 2px solid var(--primary-color);
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        .about-me {
-            max-width: 650px;
-            margin: 0 auto 30px;
+            border: 1px solid var(--border);
             position: relative;
+            z-index: 10;
+        }
+        .profile-img-container img {
+            filter: grayscale(100%);
+            transition: filter 1s ease, transform 0.7s ease;
+        }
+        .profile-img-container:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
         }
 
-        .about-me p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 15px;
-            color: var(--text-color);
+        /* Back Rectangle Styling */
+        .back-rect {
+            background-color: var(--accent-secondary); 
+            transition: all 0.3s ease;
+        }
+        .dark .back-rect {
+            background-color: #000000;
+            border: 2px solid var(--accent-secondary);
         }
 
-        .about-me p:last-child {
-            margin-bottom: 0;
-        }
-
-        .highlight {
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 25px;
-            gap: 30px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .icon-container {
-            position: relative;
-            width: 24px;
-            height: 24px;
-        }
-
-        .icon-container img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: opacity var(--transition);
-        }
-
-        .resume-btn {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            padding: 8px 20px;
+        /* Tech Tag */
+        .tech-tag {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 4px;
-            font-size: 0.9rem;
+            background-color: var(--border);
+            color: var(--muted);
             font-weight: 500;
-            text-decoration: none;
-            transition: opacity var(--transition);
+            transition: all 0.2s;
+        }
+        .group:hover .tech-tag {
+            color: var(--accent-secondary);
+            background-color: rgba(147, 53, 81, 0.05);
+        }
+        .dark .group:hover .tech-tag {
+            background-color: rgba(190, 77, 113, 0.1);
         }
 
-        .resume-btn:hover {
-            opacity: 0.9;
-        }
+        section { scroll-margin-top: 20vh; }
 
-        .section {
-            padding: 60px 0;
-            scroll-margin-top: 80px;
+        /* Hand drawn arrow styles */
+        .hand-arrow {
+            fill: none;
+            stroke: var(--accent-secondary);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
-
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 40px;
-            text-align: center;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        /* Skills Section */
-        .skills-container {
-            margin-bottom: 40px;
-        }
-
-        .skills-category {
-            margin-bottom: 30px;
-        }
-
-        .skills-category-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            transition: all var(--transition);
-        }
-
-        .skill-tag:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            transform: translateY(-3px);
-        }
-
-        .project-item {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-
-        .project-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px var(--shadow-color);
-        }
-
-        .project-link {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            padding: 20px;
-        }
-
-        .project-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 4px;
-            margin-right: 20px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background-color: var(--border-color);
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .project-content {
-            flex: 1;
-        }
-
-        .project-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .project-description {
-            font-size: 0.9rem;
-            color: var(--subtext-color);
-        }
-
-        .content-item {
-            margin-bottom: 30px;
-            padding: 25px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-
-        .content-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px var(--shadow-color);
-        }
-
-        .content-item h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .date {
-            color: var(--subtext-color);
-            font-style: italic;
-            margin-bottom: 15px;
+        
+        /* Wavy Line Style */
+        .wavy-line {
             display: block;
-            font-size: 0.9rem;
+            width: 40px;
+            height: 6px;
+            margin-top: 4px;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='6' viewBox='0 0 40 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 3 Q 5 6 10 3 T 20 3 T 30 3 T 40 3' stroke='%23B26E63' stroke-width='2' fill='none' /%3E");
+            background-repeat: repeat-x;
+            opacity: 0.7;
         }
 
-        .bullet-list {
-            list-style-type: none;
-            margin: 15px 0;
-        }
-
-        .bullet-list li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .bullet-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-        }
-
-        .section-subtitle {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 15px 0 10px 0;
-            color: var(--primary-color);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 60px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85rem;
-            color: var(--subtext-color);
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            
-            nav a {
-                margin: 0 10px;
-            }
-
-            .profile h1 {
-                font-size: 2rem;
-            }
-            
-            .project-link {
-                flex-direction: column;
-            }
-            
-            .project-image {
-                width: 100%;
-                height: 120px;
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            
-            .skills-list {
-                gap: 8px;
-            }
-            
-            .skill-tag {
-                font-size: 0.85rem;
-                padding: 5px 10px;
-            }
-        }
     </style>
 </head>
-<body>
-    <header id="header">
-        <div class="header-container">
-            <button class="theme-toggle" id="themeToggle">
-                <img id="lightModeIcon" src="assets/sun.svg" alt="Light Mode" style="display: none;">
-                <img id="darkModeIcon" src="assets/moon.svg" alt="Dark Mode">
-            </button>
-        </div>
-    </header>
 
-    <nav id="nav" class="with-header">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#education" class="nav-link">Education</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#publications" class="nav-link">Publications</a>
-    </nav>
+<body class="antialiased min-h-screen flex flex-col items-center">
 
-    <div class="container">
-        <div id="about" class="profile section">
-            <div class="profile-image">
-                <img src="assets/pfp.jpg" alt="Profile Picture">
+    <div id="resume-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md p-4 transition-all duration-300">
+        <div class="bg-card w-full max-w-4xl h-[85vh] rounded-2xl border border-border shadow-2xl flex flex-col overflow-hidden relative">
+            <div class="flex justify-between items-center p-4 border-b border-border bg-background">
+                <h3 class="text-sm font-medium text-berry">Resume.pdf</h3>
+                <button onclick="toggleResume()" class="text-muted hover:text-berry transition-colors px-2 text-sm font-medium">
+                    Close
+                </button>
             </div>
-            <h1>Anusha Nandy</h1>
-            
-            <div class="about-me">
-                <p>Hello! I'm an aspiring <span class="highlight">Machine Learning Engineer</span> and <span class="highlight">AI Researcher</span> passionate about developing intelligent systems that solve real-world problems.</p>
-                
-                <p>Currently pursuing my Master's in Data Science at UAB, I specialize in <span class="highlight">Natural Language Processing</span>, and <span class="highlight">Computer Vision</span>. I enjoy creating intuitive interfaces that make complex AI systems accessible to everyone.</p>
-                
-                <p>Welcome to my portfolio!</p>
-            </div>
-            
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/anusha-nandy/" target="_blank">
-                    <div class="icon-container">
-                        <img id="linkedinLightIcon" src="assets/linkedin-112.svg" alt="LinkedIn">
-                        <img id="linkedinDarkIcon" src="assets/linkedin-icon-dark.svg" alt="LinkedIn" style="display: none;">
+            <div class="flex-1 bg-gray-50 dark:bg-[#0f0f0f] relative">
+                <iframe src="assets/Anusha Resume.pdf" class="w-full h-full border-0">
+                    <div class="flex items-center justify-center h-full text-muted">
+                        <p>PDF preview not available.</p>
                     </div>
-                </a>
-                <a href="https://github.com/anushacodes" target="_blank">
-                    <div class="icon-container">
-                        <img id="githubLightIcon" src="./assets/github-inv.svg" alt="GitHub">
-                        <img id="githubDarkIcon" src="./assets/github-icon.svg" alt="GitHub" style="display: none;">
-                    </div>
-                </a>
-                <a href="https://drive.google.com/file/d/1oGCxlXL_VI3Sy_7VHqANLB-50bCmzBkn/view?usp=sharing" class="resume-btn" target="_blank">Resume</a>
+                </iframe>
             </div>
         </div>
-
-        <section id="skills" class="section">
-            <h2 class="section-title">Skills</h2>
-            
-            <div class="skills-container">
-                <div class="skills-category">
-                    <h3 class="skills-category-title">Machine Learning</h3>
-                    <div class="skills-list">
-                        <div class="skill-tag">Supervised Learning</div>
-                        <div class="skill-tag">Unsupervised Learning</div>
-                        <div class="skill-tag">Reinforcement Learning</div>
-                        <div class="skill-tag">Feature Engineering</div>
-                        <div class="skill-tag">Model Evaluation</div>
-                        <div class="skill-tag">Scikit-learn</div>
-                        <div class="skill-tag">XGBoost</div>
-                        <div class="skill-tag">Random Forest</div>
-                    </div>
-                </div>
-                
-                <div class="skills-category">
-                    <h3 class="skills-category-title">Deep Learning</h3>
-                    <div class="skills-list">
-                        <div class="skill-tag">Neural Networks</div>
-                        <div class="skill-tag">CNNs</div>
-                        <div class="skill-tag">RNNs</div>
-                        <div class="skill-tag">Transformers</div>
-                        <div class="skill-tag">LLMs</div>
-                        <div class="skill-tag">PyTorch</div>
-                        <div class="skill-tag">TensorFlow</div>
-                        <div class="skill-tag">Keras</div>
-                        <div class="skill-tag">Transfer Learning</div>
-                    </div>
-                </div>
-                
-                <div class="skills-category">
-                    <h3 class="skills-category-title">Natural Language Processing</h3>
-                    <div class="skills-list">
-                        <div class="skill-tag">Text Classification</div>
-                        <div class="skill-tag">Named Entity Recognition</div>
-                        <div class="skill-tag">Sentiment Analysis</div>
-                        <div class="skill-tag">Topic Modeling</div>
-                        <div class="skill-tag">Embeddings</div>
-                        <div class="skill-tag">BERT</div>
-                        <div class="skill-tag">GPT</div>
-                        <div class="skill-tag">LangChain</div>
-                        <div class="skill-tag">RAG</div>
-                    </div>
-                </div>
-                
-                <div class="skills-category">
-                    <h3 class="skills-category-title">Computer Vision</h3>
-                    <div class="skills-list">
-                        <div class="skill-tag">Image Classification</div>
-                        <div class="skill-tag">Object Detection</div>
-                        <div class="skill-tag">Segmentation</div>
-                        <div class="skill-tag">YOLO</div>
-                        <div class="skill-tag">OpenCV</div>
-                        <div class="skill-tag">MediaPipe</div>
-                    </div>
-                </div>
-                
-                <div class="skills-category">
-                    <h3 class="skills-category-title">Programming & Tools</h3>
-                    <div class="skills-list">
-                        <div class="skill-tag">Python</div>
-                        <div class="skill-tag">Java</div>
-                        <div class="skill-tag">SQL</div>
-                        <div class="skill-tag">Git</div>
-                        <div class="skill-tag">Docker</div>
-                        <div class="skill-tag">NumPy</div>
-                        <div class="skill-tag">Pandas</div>
-                        <div class="skill-tag">Matplotlib</div>
-                        <div class="skill-tag">Streamlit</div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="projects" class="section">
-            <h2 class="section-title">Projects</h2>
-            
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/PaperSage-your-personal-research-assistant" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/rag.png" alt="PaperSage">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">PaperSage - Research Assistant</div>
-                        <p class="project-description">RAG system using LangChain, ChromaDB, and Ollama for querying PDF documents efficiently.</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/AI-web-scraper-with-LLM-parsing-using-Streamlit" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/scraper.png" alt="Web Scraper">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">Web Scraper with LLM Parsing</div>
-                        <p class="project-description">Streamlit web app for scraping and analyzing website content using OpenAI's GPT models.</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/Personalised-Book-Recommendation-Engine" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/books2023.jpg" alt="Book Recommendation">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">Book Recommendation Engine</div>
-                        <p class="project-description">Recommendation system with collaborative filtering and two tower architecture.</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/grokking-transformers" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/Transformer-smaller-pic.png" alt="Transformer">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">Transformer from Scratch</div>
-                        <p class="project-description">Transformer-based language model trained on multilingual corpus.</p>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/grokking-optimizers" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/optimizer.png" alt="Optimizers">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">Grokking Optimizers</div>
-                        <p class="project-description">Deep-dive into optimization algorithms with 2D and 3D visualizations.</p>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/ml-from-scratch" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/ml.jpg" alt="ML from Scratch">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">ML from Scratch</div>
-                        <p class="project-description">Implementing popular ML algorithms using numpy for learning purposes.</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/Spotify-Topic-Modeling" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/spotify.png" alt="Spotify Topic Modeling">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">Spotify Topic Modeling</div>
-                        <p class="project-description">Analyzing song lyrics using LDA, with recommendation system using PCA and t-SNE.</p>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="project-item">
-                <a href="https://github.com/anushacodes/Wordle-game" class="project-link" target="_blank">
-                    <div class="project-image">
-                        <img src="assets/wordle.png" alt="Wordle Game">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">Wordle Game</div>
-                        <p class="project-description">A simple wordle game created entirely in Java.</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <section id="education" class="section">
-            <h2 class="section-title">Education</h2>
-            <div class="content-item">
-                <h3>Master's in Data Science</h3>
-                <span class="date">2024 - Present</span>
-                <p><b>University of Alabama at Birmingham</b></p>
-                <p>Masters of Science in Data Science at University of Alabama at Birmingham.</p>
-            </div>
-            <div class="content-item">
-                <h3>Bachelors of Computer Science in Artificial Intelligence</h3>
-                <span class="date">2020 - 2024</span>
-                <p><b>Mahindra University</b></p>
-                <p>Bachelors of Technology in Computer Science Engineering with a specialization in Artificial Intelligence at Mahindra University, Hyderabad. </p>
-                
-                <p>It was during this period that I immersed myself in the captivating realms of Machine Learning and Data Science.</p>
-            </div>
-        </section>
-
-        <section id="experience" class="section">
-            <h2 class="section-title">Work Experience</h2>
-            <div class="content-item">
-                <h3>ML Intern</h3>
-                <span class="date">Summer 2023</span>
-                <p>Indian Oil Company</p>
-                <div>
-                    <div class="section-subtitle">Key Achievements:</div>
-                    <ul class="bullet-list">
-                        <li>Developed a Python Web Scraper to download public data, including 10,000+ labelled images of Indian vehicles</li>
-                        <li>Fine-tuned YOLOv7 via transfer learning, increasing precision by 20% for diverse vehicle detection</li>
-                        <li>Optimized and converted the model to TFLite, enabling real-time monitoring on Android</li>
-                        <li>Augmented system capabilities through customized integration with Mediapipe</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="publications" class="section">
-            <h2 class="section-title">Publications</h2>
-            <div class="content-item">
-                <h3>Cohesive Group Emotion Recognition using Deep Learning</h3>
-                <span class="date">26th ACIS International Winter Conference on SNPD-Winter 2023</span>
-                <div>
-                    <p>Anish N, Dhathri M, Yashwanth R, Shashi K, Anusha N, Varnika B.</p>
-                    <p><a href="https://ieeexplore.ieee.org/abstract/document/10466291" target="_blank">View Publication</a></p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2025 Anusha Nandy - All Rights Reserved</p>
-        </footer>
     </div>
 
+    <nav class="fixed top-6 z-50 w-full px-4 flex justify-center">
+        <div class="nav-pill flex items-center gap-2 p-2 rounded-full px-6 shadow-lg"> 
+            
+            <button id="mobile-menu-btn" class="md:hidden w-8 h-8 flex items-center justify-center text-foreground hover:bg-border/50 transition-colors rounded-full">
+                <i class="fa-solid fa-bars text-sm"></i>
+            </button>
+
+            <div class="hidden md:flex items-center gap-8 px-2">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Work</a>
+                <a href="#experience" class="nav-link">Journey</a>
+            </div>
+
+            <div class="hidden md:block ml-2">
+                <button onclick="toggleResume()" class="px-4 py-1.5 bg-berry text-white rounded-full text-xs font-medium hover:opacity-90 transition-opacity shadow-md">
+                    Resume
+                </button>
+            </div>
+
+            <div class="w-px h-4 bg-border mx-2 hidden md:block"></div>
+
+            <button id="theme-toggle" class="w-8 h-8 flex items-center justify-center text-muted hover:text-berry transition-colors rounded-full" aria-label="Toggle Theme">
+                <i class="fa-solid fa-sun hidden dark:block text-xs"></i>
+                <i class="fa-solid fa-moon dark:hidden text-xs"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl transform translate-y-[-100%] transition-transform duration-500 md:hidden flex flex-col items-center justify-center gap-8">
+        <a href="#about" class="text-3xl font-medium text-foreground mobile-link hover:text-berry">About</a>
+        <a href="#skills" class="text-3xl font-medium text-foreground mobile-link hover:text-berry">Skills</a>
+        <a href="#projects" class="text-3xl font-medium text-foreground mobile-link hover:text-berry">Work</a>
+        <a href="#experience" class="text-3xl font-medium text-foreground mobile-link hover:text-berry">Journey</a>
+        <button onclick="toggleResume()" class="text-xl font-medium text-berry mobile-link border border-berry px-6 py-2 rounded-full">
+            View Resume
+        </button>
+        <button id="close-mobile-menu" class="absolute top-8 right-8 text-sm font-medium text-muted hover:text-berry transition-colors">
+            Close
+        </button>
+    </div>
+
+    <main class="w-full max-w-5xl px-6 py-24 md:py-36 flex flex-col gap-48 relative z-10 mx-auto">
+    <header id="home" class="flex flex-col-reverse md:flex-row justify-between items-center gap-12 reveal min-h-[60vh] flex items-center justify-center">
+            <div class="flex-1 mt-4 md:mt-0 text-center md:text-left relative">
+                
+                <svg class="absolute -top-10 -left-6 w-6 h-6 text-berry animate-pulse opacity-90 hidden md:block" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                </svg>
+
+                <div class="relative inline-block mb-1">
+                    <span class="font-hand text-2xl md:text-3xl text-muted -rotate-3 block tracking-wide">hello there! i'm</span>
+                    <svg class="absolute -right-8 top-6 w-8 h-8 text-muted/50 hidden md:block rotate-12 hand-arrow" viewBox="0 0 50 50">
+                         <path d="M10,5 Q25,5 35,25" />
+                         <path d="M35,25 L25,25 M35,25 L35,15" /> 
+                    </svg>
+                </div>
+
+                <h1 class="font-display whitespace-nowrap text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1] relative z-10">
+                    <span class="text-accent">Anusha</span> <span class="text-berry">Nandy</span>
+                    
+                    <svg class="absolute bottom-2 right-0 md:-right-8 w-5 h-5 text-accent animate-bounce" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
+                    </svg>
+                </h1>
+
+                <p class="text-muted text-lg font-light leading-relaxed mb-8 max-w-lg mx-auto md:mx-0">
+                    <span class="text-accent font-semibold">Data Scientist</span> & 
+                    <span class="text-berry font-semibold">Machine Learning Engineer</span>. 
+
+
+
+
+                    Bridging the gap between <span class="relative inline-block px-1"> 
+                        <span class="relative z-20 font-medium text-foreground">experimental notebooks</span>
+                        <svg class="absolute left-0 -bottom-1 w-full h-5 z-0 text-accent opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0 2 L 100 0 L 98 10 L 2 8 Z" fill="currentColor" />
+                        </svg>
+                    </span>
+                    
+                    and 
+                    
+                    <span class="relative inline-block px-1">
+                        <span class="relative z-20 font-medium text-foreground">production systems</span>
+                        <svg class="absolute left-0 -bottom-1 w-full h-5 z-0 text-berry opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M2 0 L 98 2 L 100 8 L 0 10 Z" fill="currentColor" />
+                        </svg>
+                    </span>.
+                </p>
+                
+                <div class="flex gap-6 mt-8 text-muted justify-center md:justify-start items-center">
+                    <a href="https://github.com/anushacodes" class="hover:text-accent transition-colors"><i class="fa-brands fa-github text-2xl"></i></a>
+                    <a href="https://www.linkedin.com/in/anusha-nandy/" class="hover:text-accent transition-colors"><i class="fa-brands fa-linkedin text-2xl"></i></a>
+                    <a href="https://medium.com/@andylikestowrite" class="hover:text-accent transition-colors"><i class="fa-brands fa-medium text-2xl"></i></a>
+                    <a href="mailto:anusha.nandy1@gmail.com" class="hover:text-accent transition-colors"><i class="fa-solid fa-envelope text-2xl"></i></a>
+                </div>
+            </div>
+            
+            <div class="relative w-32 h-32 md:w-44 md:h-44 flex-shrink-0 cursor-pointer group">
+                
+                <div class="absolute -top-6 -right-6 w-16 h-16 text-accent/20 animate-spin-slow z-0">
+                     <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
+                        <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+                     </svg>
+                </div>
+
+                <div class="back-rect absolute top-3 left-3 w-full h-full rounded-lg -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform"></div>
+                
+                <div class="profile-img-container w-full h-full rounded-lg bg-background z-10">
+                    <img src="assets/pfp.jpg" alt="Anusha Nandy" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </header>
+
+        <section id="about" class="reveal min-h-[40vh] flex flex-col justify-center">
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="flex flex-col flex-shrink-0 mt-1.5 w-24">
+                    <h2 class="text-xs font-semibold text-accent uppercase tracking-widest">01 / About</h2>
+                    <svg class="w-10 h-3 text-berry/60 mt-2" viewBox="0 0 40 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M0 3 Q 10 0 20 3 T 40 3" />
+                    </svg>
+                </div>
+                
+                <div class="text-foreground leading-relaxed space-y-6 flex-1">
+                    
+                    <p class="text-lg font-medium">
+                        I’ve always liked stories. To me, <span class="text-accent font-semibold">Data Science</span> is just a way of finding the truth hidden inside a mess of numbers. I operate at the intersection of data and <span class="text-berry font-semibold">Engineering</span>, acting as a student, engineer, and 
+                        
+                        <span class="relative inline-block px-1">
+                            <span class="relative z-20 font-medium text-foreground">relentless troubleshooter</span>
+                            <svg class="absolute left-0 -bottom-1 w-full h-5 z-0 text-berry opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M2 0 L 98 2 L 100 8 L 0 10 Z" fill="currentColor" />
+                            </svg>
+                        </span>.
+                    </p>
+
+                    <p class="text-muted font-light">
+                        Currently, I’m finishing up my M.S. in Data Science, focusing heavily on Machine Learning Engineering. I enjoy the 
+                        
+                        <span class="relative inline-block px-1">
+                            <span class="relative z-20 font-medium text-foreground">logic puzzle of system design</span>
+                            <svg class="absolute left-0 -bottom-1 w-full h-5 z-0 text-accent opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M0 2 L 100 0 L 98 10 L 2 8 Z" fill="currentColor" />
+                            </svg>
+                        </span>
+                        
+                        —taking a theoretical concept and building the infrastructure to support it. Whether it's stitching images together or predicting customer churn, my goal is always the same: to build tools that are reliable and scalable.
+                    </p>
+
+                    <p class="text-muted font-light">
+                        Outside of tech, I try to stay offline as much as I can. I love exploring new places and I write about tech and life on Medium. I’m simply looking for a team where I can ask a million questions, solve hard problems, and keep learning.
+                    </p>
+                    
+                    <div class="pt-6">
+                        <p class="text-xs font-semibold text-foreground mb-4 uppercase tracking-wider">Current Focus</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-3 py-1.5 rounded-md bg-border/50 text-muted font-medium border border-transparent hover:border-berry hover:text-berry transition-colors cursor-default">Reliable ML</span>
+                            <span class="text-xs px-3 py-1.5 rounded-md bg-border/50 text-muted font-medium border border-transparent hover:border-berry hover:text-berry transition-colors cursor-default">End-to-End Pipelines</span>
+                            <span class="text-xs px-3 py-1.5 rounded-md bg-border/50 text-muted font-medium border border-transparent hover:border-berry hover:text-berry transition-colors cursor-default">Cloud Architecture</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="reveal pt-16 border-t border-border min-h-[50vh] flex flex-col justify-center">
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="flex flex-col flex-shrink-0 mt-1.5 w-24">
+                    <h2 class="text-xs font-semibold text-accent uppercase tracking-widest">02 / Stack</h2>
+                    <svg class="w-10 h-3 text-berry/60 mt-2" viewBox="0 0 40 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M0 3 Q 10 0 20 3 T 40 3" />
+                    </svg>
+                </div>
+                
+                <div class="flex-1 grid sm:grid-cols-2 gap-y-12 gap-x-12">
+                    <div>
+                        <h3 class="text-sm font-semibold text-foreground mb-4 border-b border-berry/20 pb-1 inline-block">Languages</h3>
+                        <ul class="space-y-2 text-sm text-muted">
+                            <li class="hover:text-accent transition-colors cursor-default">Python (NumPy, Pandas)</li>
+                            <li class="hover:text-accent transition-colors cursor-default">SQL (PostgreSQL, MySQL)</li>
+                            <li class="hover:text-accent transition-colors cursor-default">R Programming</li>
+                            <li class="hover:text-accent transition-colors cursor-default">Bash / Shell Scripting</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-foreground mb-4 border-b border-berry/20 pb-1 inline-block">Machine Learning</h3>
+                        <ul class="space-y-2 text-sm text-muted">
+                            <li class="hover:text-accent transition-colors cursor-default">PyTorch & TensorFlow</li>
+                            <li class="hover:text-accent transition-colors cursor-default">Scikit-learn</li>
+                            <li class="hover:text-accent transition-colors cursor-default">XGBoost / LightGBM</li>
+                            <li class="hover:text-accent transition-colors cursor-default">HuggingFace Transformers</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-foreground mb-4 border-b border-berry/20 pb-1 inline-block">Infrastructure</h3>
+                        <ul class="space-y-2 text-sm text-muted">
+                            <li class="hover:text-accent transition-colors cursor-default">Docker & Kubernetes</li>
+                            <li class="hover:text-accent transition-colors cursor-default">AWS (SageMaker, S3, EC2)</li>
+                            <li class="hover:text-accent transition-colors cursor-default">Terraform</li>
+                            <li class="hover:text-accent transition-colors cursor-default">GitHub Actions (CI/CD)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-foreground mb-4 border-b border-berry/20 pb-1 inline-block">Tools & Platforms</h3>
+                        <ul class="space-y-2 text-sm text-muted">
+                            <li class="hover:text-accent transition-colors cursor-default">MLflow & DVC</li>
+                            <li class="hover:text-accent transition-colors cursor-default">Apache Airflow</li>
+                            <li class="hover:text-accent transition-colors cursor-default">Tableau & PowerBI</li>
+                            <li class="hover:text-accent transition-colors cursor-default">FastAPI / Flask</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="reveal pt-16 border-t border-border min-h-[60vh]">
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="flex flex-col flex-shrink-0 mt-1.5 w-24">
+                    <h2 class="text-xs font-semibold text-accent uppercase tracking-widest">03 / Work</h2>
+                    <svg class="w-10 h-3 text-berry/60 mt-2" viewBox="0 0 40 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M0 3 Q 10 0 20 3 T 40 3" />
+                    </svg>
+                </div>
+
+                <div class="flex-1 grid gap-8">
+                    
+                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
+                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-900 grayscale group-hover:grayscale-0 transition-all duration-700 border border-border">
+                            <img src="churn.png" alt="Churn" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Customer Churn Engine</h3>
+                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
+                            </div>
+                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
+                                A production-ready XGBoost model pipeline identifying at-risk customers with 85% accuracy. Integrated with Salesforce via REST API.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Docker</span>
+                                <span class="tech-tag">FastAPI</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
+                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
+                            <i class="fa-solid fa-gears text-3xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">End-to-End MLOps</h3>
+                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
+                            </div>
+                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
+                                Automated CI/CD pipeline reducing deployment time from 3 days to 4 hours using Jenkins & SageMaker.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">MLflow</span>
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">Terraform</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
+                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
+                            <i class="fa-solid fa-database text-3xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Real-Estate ETL</h3>
+                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
+                            </div>
+                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
+                                Automated scraping and cleaning pipeline processing 50k housing records daily.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">Airflow</span>
+                                <span class="tech-tag">Soup</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="reveal pt-16 border-t border-border min-h-[50vh]">
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="flex flex-col flex-shrink-0 mt-1.5 w-24">
+                    <h2 class="text-xs font-semibold text-accent uppercase tracking-widest">04 / Path</h2>
+                    <svg class="w-10 h-3 text-berry/60 mt-2" viewBox="0 0 40 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M0 3 Q 10 0 20 3 T 40 3" />
+                    </svg>
+                </div>
+
+                <div class="flex-1 space-y-12">
+                    
+                    <div class="group relative pl-8 border-l border-border hover:border-berry transition-colors">
+                        <div class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 bg-background border-2 border-accent rounded-full group-hover:border-berry transition-colors"></div>
+                        <span class="text-[10px] font-medium text-accent mb-1 block uppercase tracking-wide group-hover:text-berry">2024 — Present</span>
+                        <h3 class="text-base font-semibold text-foreground">M.S. Data Science</h3>
+                        <p class="text-xs text-muted mb-3 italic">University of Alabama at Birmingham</p>
+                        <p class="text-sm text-muted font-light leading-relaxed">Specializing in Machine Learning, Big Data Analytics, and Cloud Computing.</p>
+                    </div>
+
+                    <div class="group relative pl-8 border-l border-border hover:border-berry transition-colors">
+                        <div class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 bg-background border-2 border-border rounded-full group-hover:border-berry transition-colors"></div>
+                        <span class="text-[10px] font-medium text-muted mb-1 block uppercase tracking-wide group-hover:text-berry">2022</span>
+                        <h3 class="text-base font-semibold text-foreground">AI Intern</h3>
+                        <p class="text-xs text-muted mb-3 italic">Indian Oil Company</p>
+                        <p class="text-sm text-muted font-light leading-relaxed">Optimized indian vehicle recognition algorithms, enabling real-time monitoring on Android with 30% faster inference.</p>
+                    </div>
+
+                    <div class="group relative pl-8 border-l border-border hover:border-berry transition-colors">
+                        <div class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 bg-background border-2 border-border rounded-full group-hover:border-berry transition-colors"></div>
+                        <span class="text-[10px] font-medium text-muted mb-1 block uppercase tracking-wide group-hover:text-berry">2020 — 2024</span>
+                        <h3 class="text-base font-semibold text-foreground">B.Tech. Artificial Intelligence</h3>
+                        <p class="text-xs text-muted mb-3 italic">Mahindra University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-20 border-t border-border pt-8 w-full flex flex-col md:flex-row justify-between items-center text-xs text-muted font-medium">
+            <p>&copy; 2026 Anusha Nandy.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-foreground">Return to Top</a>
+                <a href="mailto:anusha.nandy1@gmail.com" class="hover:text-foreground">Contact</a>
+            </div>
+        </footer>
+
+    </main>
+
     <script>
-        // Initialize nav links
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function() {
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
+        // --- 1. Theme Logic (Default Light) ---
+        if (!('theme' in localStorage)) { localStorage.theme = 'light'; }
+        
+        function applyTheme() {
+            if (localStorage.theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+        applyTheme();
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            localStorage.theme = localStorage.theme === 'dark' ? 'light' : 'dark';
+            applyTheme();
         });
 
-        // Variables for scroll handling
-        const header = document.getElementById('header');
-        const nav = document.getElementById('nav');
-        let lastScrollTop = 0;
-        
-        // Function to check scroll position and update header/nav
-        function checkScroll() {
-            const scrollTop = window.scrollY;
-            
-            // Always show nav
-            if (scrollTop > 10) {
-                nav.classList.remove('with-header');
-                header.classList.add('hidden');
-            } else {
-                nav.classList.add('with-header');
-                header.classList.remove('hidden');
-            }
-            
-            lastScrollTop = scrollTop;
+        // --- 2. Mobile Menu Logic ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('translate-y-[-100%]');
         }
 
-        // Check scroll on page load and scroll event
-        window.addEventListener('load', checkScroll);
-        window.addEventListener('scroll', function() {
-            checkScroll();
-            
-            // Highlight active section in navigation
-            const sections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let currentSection = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.scrollY >= (sectionTop - 150)) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const lightModeIcon = document.getElementById('lightModeIcon');
-        const darkModeIcon = document.getElementById('darkModeIcon');
-        const githubLightIcon = document.getElementById('githubLightIcon');
-        const githubDarkIcon = document.getElementById('githubDarkIcon');
-        const linkedinLightIcon = document.getElementById('linkedinLightIcon');
-        const linkedinDarkIcon = document.getElementById('linkedinDarkIcon');
-        
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme');
-        let isDarkMode = savedTheme === 'dark';
-        
-        // Apply saved theme
-        if (isDarkMode) {
-            document.body.classList.add('dark-mode');
-            darkModeIcon.style.display = 'none';
-            lightModeIcon.style.display = 'block';
-            githubLightIcon.style.display = 'none';
-            githubDarkIcon.style.display = 'block';
-            linkedinLightIcon.style.display = 'none';
-            linkedinDarkIcon.style.display = 'block';
+        // --- 3. Resume Modal ---
+        function toggleResume() {
+            const modal = document.getElementById('resume-modal');
+            modal.classList.toggle('hidden');
         }
 
-        themeToggle.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark-mode', isDarkMode);
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-            
-            if (isDarkMode) {
-                darkModeIcon.style.display = 'none';
-                lightModeIcon.style.display = 'block';
-                githubLightIcon.style.display = 'none';
-                githubDarkIcon.style.display = 'block';
-                linkedinLightIcon.style.display = 'none';
-                linkedinDarkIcon.style.display = 'block';
-            } else {
-                lightModeIcon.style.display = 'none';
-                darkModeIcon.style.display = 'block';
-                githubDarkIcon.style.display = 'none';
-                githubLightIcon.style.display = 'block';
-                linkedinDarkIcon.style.display = 'none';
-                linkedinLightIcon.style.display = 'block';
-            }
+        // --- 4. GSAP Animations ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Section Reveals
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach(el => {
+            gsap.fromTo(el, 
+                { opacity: 0, y: 30 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 1.0, 
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
         });
     </script>
 </body>
