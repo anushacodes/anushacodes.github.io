@@ -462,6 +462,7 @@
             </div>
         </section>
 
+
         <section id="projects" class="reveal pt-16 border-t border-border min-h-[60vh]">
             <div class="flex flex-col md:flex-row gap-12">
                 <div class="flex flex-col flex-shrink-0 mt-1.5 w-24">
@@ -474,67 +475,109 @@
                 <div class="flex-1 grid gap-8">
                     
                     <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
-                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-900 grayscale group-hover:grayscale-0 transition-all duration-700 border border-border">
-                            <img src="churn.png" alt="Churn" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Customer Churn Engine</h3>
-                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
-                            </div>
-                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
-                                A production-ready XGBoost model pipeline identifying at-risk customers with 85% accuracy. Integrated with Salesforce via REST API.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Docker</span>
-                                <span class="tech-tag">FastAPI</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
                         <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
-                            <i class="fa-solid fa-gears text-3xl"></i>
+                            <i class="fa-solid fa-shield-halved text-3xl"></i>
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">End-to-End MLOps</h3>
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Real-Time Fraud Detection Pipeline</h3>
                                 <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
                             </div>
                             <p class="text-sm text-muted font-light leading-relaxed mb-5">
-                                Automated CI/CD pipeline reducing deployment time from 3 days to 4 hours using Jenkins & SageMaker.
+                                Built a real-time fraud detection pipeline processing ~6K events/sec with <100ms latency. Implemented drift monitoring and automated retraining to maintain stable PR-AUC (~0.94) across streaming data.
                             </p>
                             <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">Kafka</span>
+                                <span class="tech-tag">LightGBM</span>
+                                <span class="tech-tag">Prefect</span>
                                 <span class="tech-tag">MLflow</span>
-                                <span class="tech-tag">AWS</span>
-                                <span class="tech-tag">Terraform</span>
                             </div>
                         </div>
                     </a>
 
                     <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
                         <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
-                            <i class="fa-solid fa-database text-3xl"></i>
+                            <i class="fa-solid fa-robot text-3xl"></i>
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Real-Estate ETL</h3>
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">RAG-based Chatbot for Document QA</h3>
                                 <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
                             </div>
                             <p class="text-sm text-muted font-light leading-relaxed mb-5">
-                                Automated scraping and cleaning pipeline processing 50k housing records daily.
+                                Built a production-grade RAG pipeline integrating LLAMA with structured citation enforcement. Improved retrieval precision by 30-45% and reduced hallucinations by 35%.
                             </p>
                             <div class="flex flex-wrap gap-2">
-                                <span class="tech-tag">Airflow</span>
-                                <span class="tech-tag">Soup</span>
+                                <span class="tech-tag">LlamaIndex</span>
+                                <span class="tech-tag">FAISS</span>
+                                <span class="tech-tag">Sentence Transformers</span>
                             </div>
                         </div>
                     </a>
+
+                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
+                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
+                            <i class="fa-solid fa-brain text-3xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Language Model from Scratch</h3>
+                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
+                            </div>
+                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
+                                Trained a 22M-parameter Transformer LM from scratch in PyTorch, implementing tokenization, attention, masking, and training loop end-to-end. Evaluated various positional encoding strategies.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">PyTorch</span>
+                                <span class="tech-tag">Transformers</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
+                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
+                            <i class="fa-solid fa-book text-3xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Personalised Book Recommendation</h3>
+                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
+                            </div>
+                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
+                                Built a scalable retrieval-based recommender using implicit feedback and a two-tower neural architecture with FAISS KNN for efficient candidate retrieval.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">FAISS</span>
+                                <span class="tech-tag">Neural Networks</span>
+                                <span class="tech-tag">Collaborative Filtering</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="sleek-card p-8 rounded-xl flex flex-col md:flex-row gap-8 group">
+                        <div class="w-full md:w-36 h-36 flex-shrink-0 rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center text-muted group-hover:border-berry group-hover:text-berry transition-colors">
+                            <i class="fa-solid fa-filter text-3xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold text-foreground group-hover:text-berry transition-colors">Multitask BERT for Spam Detection</h3>
+                                <i class="fa-solid fa-arrow-right text-muted text-sm -rotate-45 group-hover:rotate-0 group-hover:text-berry transition-all"></i>
+                            </div>
+                            <p class="text-sm text-muted font-light leading-relaxed mb-5">
+                                Designed a multitask learning framework by fine-tuning BERT jointly on spam detection, sentiment analysis, and toxicity classification, achieving 96.9% accuracy on YouTube spam detection.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">BERT</span>
+                                <span class="tech-tag">Multitask Learning</span>
+                                <span class="tech-tag">NLP</span>
+                            </div>
+                        </div>
+                    </a>
+
                 </div>
             </div>
         </section>
-
+       
         <section id="experience" class="reveal pt-16 border-t border-border min-h-[50vh]">
             <div class="flex flex-col md:flex-row gap-12">
                 <div class="flex flex-col flex-shrink-0 mt-1.5 w-24">
