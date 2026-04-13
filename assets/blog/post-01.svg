@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f1ede9" />
+      <stop offset="100%" stop-color="#d9d3cc" />
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2b7a78" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#2b7a78" stop-opacity="0.75" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)" />
+  <g stroke="url(#line)" stroke-width="6" fill="none" stroke-linecap="round">
+    <path d="M120 520c120-180 240-200 360-120 140 90 240 60 360-40 120-100 220-90 320-30" />
+    <path d="M120 600c120-160 240-180 360-100 140 90 240 60 360-40 120-100 220-90 320-30" opacity="0.5" />
+  </g>
+  <g fill="#1f2328" font-family="Source Sans 3, sans-serif">
+    <text x="120" y="180" font-size="44" font-weight="600">Observability Notes</text>
+    <text x="120" y="230" font-size="24" fill="#5a636d">Placeholder blog image</text>
+  </g>
+</svg>
