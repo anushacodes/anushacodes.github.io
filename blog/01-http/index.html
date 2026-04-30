@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HTTP From the Ground Up — Anusha Nandy</title>
+  <meta name="description" content="A practical reference for how HTTP actually works — statelessness, methods, CORS, caching, and more." />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="../../theme.js"></script>
+</head>
+<body>
+
+  <!-- Full-width pride bar -->
+  <div id="rainbow-bar"></div>
+
+  <!-- Theme toggle fixed top-right -->
+  <div class="theme-toggle">
+    <div class="toggle-track" id="theme-track" role="button" aria-label="Toggle theme" tabindex="0">
+      <div class="toggle-opt selected" id="opt-light"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+      <div class="toggle-opt" id="opt-dark"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+    </div>
+  </div>
+
+  <!-- ── Sidebar ── -->
+  <div class="layout-wrap">
+  <aside class="sidebar">
+    <nav class="sidebar-nav" aria-label="Site navigation">
+      <a href="../../index.html">home</a>
+      <a href="../../projects/index.html">projects</a>
+      <a href="../../blog/index.html" class="active">blog</a>
+      <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">github</a>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+
+  <main class="page">
+    <a href="../index.html" class="back-link">← Blog</a>
+
+    <article>
+      <div class="post-header">
+        <h1>HTTP From the Ground Up</h1>
+        <p class="post-meta">Apr 13, 2026</p>
+        <div style="display:flex;gap:0.35rem;margin-top:0.15rem;flex-wrap:wrap">
+          <span class="tag">backend</span>
+        </div>
+      </div>
+
+      <div class="post-body">
+
+        <p>
+          Before you write a single route handler or call a single API, HTTP is already doing a
+          significant amount of work underneath you. These are the bits I keep coming back to —
+          the model, the mechanics, and the sharp edges that actually matter when things go wrong.
+        </p>
+
+        <!-- IMAGE: A clean diagram showing the client-server request/response cycle.
+             A browser on the left sends a labelled arrow ("Request") to a server on the right,
+             which returns a labelled arrow ("Response"). Simple, monochrome, minimal. -->
+        <figure class="post-image">
+          <div style="background:var(--hover-bg);border:1px solid var(--border);border-radius:8px;padding:3rem 1rem;text-align:center;color:var(--muted);font-size:0.82rem;">
+            [Image: Client → Request → Server → Response cycle diagram]
+          </div>
+          <figcaption>The fundamental HTTP exchange. Every browser interaction follows this loop.</figcaption>
+        </figure>
+
+        <h2>The Core Model</h2>
+        <p>
+          HTTP is the protocol browsers and servers use to exchange data. Communication is always
+          initiated by the client — the server just waits, processes, and responds (with JSON, HTML,
+          text, whatever is appropriate).
+        </p>
+        <p>
+          The protocol is <strong>stateless</strong>. The server holds no memory of previous
+          interactions. Every request must be fully self-contained, carrying whatever it needs —
+          auth tokens, session IDs — to be understood in isolation. This makes the architecture
+          simple and horizontally scalable: any server in a cluster can handle any request without
+          needing shared state.
+        </p>
+
+        <h2>Where HTTP Lives (OSI Model)</h2>
+        <p>
+          HTTP sits at Layer 7, the Application Layer. It doesn't deal with transport directly —
+          that's TCP's job. TCP handles reliable, ordered delivery. HTTP builds its semantics on
+          top of that. As an application developer you mostly live at Layer 7; the handshakes
+          happen under you.
+        </p>
+
+        <h2>Version History</h2>
+        <p>
+          Each version solved a specific bottleneck from the one before:
+        </p>
+        <ul>
+          <li><strong>HTTP/1.0</strong> — a new TCP connection per request. Slow.</li>
+          <li><strong>HTTP/1.1</strong> — persistent connections (keep-alive). Multiple requests over one connection.</li>
+          <li><strong>HTTP/2</strong> — multiplexing. Multiple requests simultaneously over one connection, plus binary framing.</li>
+          <li><strong>HTTP/3</strong> — built on QUIC over UDP. Faster handshakes, better packet-loss recovery.</li>
+        </ul>
+
+        <h2>Anatomy of a Message</h2>
+        <p>
+          Both request and response messages share the same structural shape: a start line, headers,
+          a blank line (CRLF), then an optional body. The blank line is load-bearing — it's the
+          exact delimiter that tells the parser where headers end and payload begins.
+        </p>
+        <pre><code>GET /api/users HTTP/1.1
+Host: api.example.com
+Authorization: Bearer &lt;token&gt;
+Accept: application/json
+
+</code></pre>
+
+        <h2>Headers</h2>
+        <p>
+          Headers are key-value metadata — think of them as writing the shipping label on the
+          outside of a parcel. They keep metadata cleanly separated from the payload. A few
+          categories worth knowing:
+        </p>
+        <ul>
+          <li><strong>Request headers</strong> — client context: <code>User-Agent</code>, <code>Authorization</code>, <code>Accept</code></li>
+          <li><strong>General headers</strong> — apply to both sides: <code>Date</code>, <code>Cache-Control</code>, <code>Connection</code></li>
+          <li><strong>Representation headers</strong> — body format: <code>Content-Type</code>, <code>Content-Length</code>, <code>Content-Encoding</code></li>
+          <li><strong>Security headers</strong> — browser policy: <code>Strict-Transport-Security</code>, <code>Content-Security-Policy</code></li>
+        </ul>
+
+        <h2>Methods and Idempotency</h2>
+        <p>
+          Methods encode the client's intent. The semantics matter more than people give them credit for:
+        </p>
+        <ul>
+          <li><code>GET</code> — fetch</li>
+          <li><code>POST</code> — create</li>
+          <li><code>PATCH</code> — partial update</li>
+          <li><code>PUT</code> — full replacement</li>
+          <li><code>DELETE</code> — remove</li>
+          <li><code>OPTIONS</code> — server capabilities (used in CORS preflight)</li>
+        </ul>
+        <p>
+          <strong>Idempotency</strong> matters: <code>GET</code>, <code>PUT</code>, and
+          <code>DELETE</code> can be called any number of times and produce the same final state.
+          <code>POST</code> is not idempotent — call it twice, you create two resources.
+          Sending a <code>PUT</code> when you mean <code>PATCH</code> isn't just a style issue;
+          it overwrites fields the client never intended to touch.
+        </p>
+
+        <h2>CORS</h2>
+        <p>
+          Browsers enforce the Same-Origin Policy by default: a page at <code>localhost:5173</code>
+          cannot read a response from <code>localhost:3000</code> — even on the same machine,
+          different ports are different origins.
+        </p>
+        <p>
+          CORS lets servers explicitly permit cross-origin requests. <strong>Simple requests</strong>
+          (plain GET or POST, no custom headers) go straight through if the server returns a
+          matching <code>Access-Control-Allow-Origin</code>. Anything more complex — <code>PUT</code>,
+          <code>DELETE</code>, <code>Authorization</code> headers, <code>application/json</code>
+          body — triggers a preflight:
+        </p>
+        <ol>
+          <li>Browser automatically fires an <code>OPTIONS</code> request first.</li>
+          <li>Server must respond <code>204 No Content</code> with <code>Access-Control-Allow-Origin</code>, <code>Access-Control-Allow-Methods</code>, <code>Access-Control-Allow-Headers</code>, and <code>Access-Control-Max-Age</code>.</li>
+          <li>If approved, the actual request goes through.</li>
+        </ol>
+        <p>
+          A CORS error in the network tab almost always means the server didn't return the right
+          headers — not that your API endpoint is broken.
+        </p>
+
+        <h2>Status Codes</h2>
+        <p>
+          The category tells you almost everything at a glance:
+        </p>
+        <ul>
+          <li><strong>1xx</strong> — informational (e.g., <code>100 Continue</code>)</li>
+          <li><strong>2xx</strong> — success: <code>200 OK</code>, <code>201 Created</code>, <code>204 No Content</code></li>
+          <li><strong>3xx</strong> — redirection: <code>301</code> permanent, <code>302</code> temporary, <code>304 Not Modified</code></li>
+          <li><strong>4xx</strong> — client error: <code>400</code> bad request, <code>401</code> unauthenticated, <code>403</code> unauthorized, <code>404</code> not found, <code>409</code> conflict, <code>429</code> rate limited</li>
+          <li><strong>5xx</strong> — server error: <code>500</code> unhandled exception, <code>502</code> bad gateway, <code>503</code> unavailable, <code>504</code> timeout</li>
+        </ul>
+        <p>
+          Worth drawing a hard line: <strong>401</strong> means "I don't know who you are" (authentication).
+          <strong>403</strong> means "I know who you are, but you can't do that" (authorization).
+          Mixing these up in production is a real debugging headache.
+        </p>
+
+        <h2>Caching</h2>
+        <p>
+          Three headers drive HTTP caching: <code>Cache-Control</code> (duration),
+          <code>ETag</code> (a hash of the resource), and <code>Last-Modified</code>.
+          The client stores the ETag; on the next request it sends <code>If-None-Match</code>.
+          If the server's resource hash matches, it responds <code>304 Not Modified</code> — no body,
+          no wasted bandwidth. A <code>304</code> is a success, not an error.
+        </p>
+
+        <h2>Content Negotiation and Compression</h2>
+        <p>
+          The client declares what it can handle — <code>Accept: application/json</code>,
+          <code>Accept-Encoding: gzip</code>, <code>Accept-Language: en</code> — and the server
+          responds with <code>Content-Type</code> and <code>Content-Encoding</code> accordingly.
+          Compression is not optional for performance: uncompressed large text payloads can be
+          multiple times heavier than gzipped equivalents. The browser decompresses automatically.
+        </p>
+
+        <h2>Large Payloads</h2>
+        <p>
+          File uploads use <code>multipart/form-data</code>. The key detail: a <code>boundary</code>
+          string defined in the headers acts as the physical delimiter between binary chunks in the
+          body. Large server responses use chunked transfer encoding or Server-Sent Events
+          (<code>text/event-stream</code>), streaming data while the connection stays open.
+        </p>
+
+        <h2>HTTPS / TLS</h2>
+        <p>
+          HTTPS is HTTP wrapped in a TLS tunnel. SSL is deprecated; TLS is the standard.
+          Certificates authenticate the server; TLS encrypts the data in transit.
+          Your application layer logic doesn't change — the encryption layer sits below it at
+          the transport boundary.
+        </p>
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0" />
+
+        <p>
+          HTTP is one of those things that's easy to use before you understand it — and much easier
+          to debug once you do. The stateless model, the method semantics, the preflight dance — they
+          all have reasons behind them. The next post covers routing: how a server takes an incoming
+          request and maps it to the right piece of logic.
+        </p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer"></footer>
+  </div><!-- /main-content -->
+</div><!-- /layout-wrap -->
+</body>
+</html>

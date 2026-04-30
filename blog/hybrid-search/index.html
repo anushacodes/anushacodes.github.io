@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semantic Search Works Until It Doesn't: Building Hybrid Search — Anusha Nandy</title>
+  <meta name="description" content="Embeddings are remarkable right up until the exact moment a user searches for a serial number. Here's how hybrid search works." />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="../../theme.js"></script>
+</head>
+<body>
+
+  <!-- Full-width pride bar -->
+  <div id="rainbow-bar"></div>
+
+  <!-- Theme toggle fixed top-right -->
+  <div class="theme-toggle">
+    <div class="toggle-track" id="theme-track" role="button" aria-label="Toggle theme" tabindex="0">
+      <div class="toggle-opt selected" id="opt-light"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+      <div class="toggle-opt" id="opt-dark"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+    </div>
+  </div>
+
+  <!-- ── Sidebar ── -->
+  <div class="layout-wrap">
+  <aside class="sidebar">
+    <nav class="sidebar-nav" aria-label="Site navigation">
+      <a href="../../index.html">home</a>
+      <a href="../../projects/index.html">projects</a>
+      <a href="../../blog/index.html" class="active">blog</a>
+      <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">github</a>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+
+  <main class="page">
+    <a href="../index.html" class="back-link">← Blog</a>
+
+    <article>
+      <div class="post-header">
+        <h1>Semantic Search Works Until It Doesn't: Building Hybrid Search</h1>
+        <p class="post-meta">Apr 13, 2026</p>
+        <div style="display:flex;gap:0.35rem;margin-top:0.15rem;flex-wrap:wrap">
+          <span class="tag">search</span>
+          <span class="tag">ml</span>
+        </div>
+      </div>
+
+      <div class="post-body">
+
+        <p>
+          Embeddings are remarkable right up until the exact moment a user searches for a serial number.
+        </p>
+        
+        <p>
+          If someone queries your RAG application for <code>TX-9942-B connection timeout</code>, semantic search fails. The vector space maps <code>TX-9942-B</code> to a neighborhood of abstract alphanumeric patterns. It loses the precise sequence of characters that makes that identifier distinct.
+        </p>
+        
+        <p>
+          Semantic search understands intent across different phrasing. Lexical search understands exactness. You need both. This intersection is Hybrid Search.
+        </p>
+        
+        <p>
+          Here is how it actually works, why scaling scores is a trap, and how to build it from first principles.
+        </p>
+
+        <h2>Dense vs Sparse: A Primer</h2>
+        
+        <p>We retrieve context via two completely different mathematical mechanisms. You need to understand both to merge them effectively.</p>
+
+        <h3>Dense Search (Embeddings)</h3>
+        <p>Text is projected into a high-dimensional vector space. We find matches by calculating the Cosine Similarity between the query vector and document vectors. It captures concepts. It doesn't care if the words match exactly.</p>
+        
+        <p>In frameworks like LangChain, this is what you are doing when you initialize a standard vector store:</p>
+<pre><code>vector_retriever = chroma_db.as_retriever(search_kwargs={"k": 4})</code></pre>
+
+        <h3>Sparse Search (BM25)</h3>
+        <p>Sparse search is the direct descendant of TF-IDF. It physically counts word overlaps between the query and the document. However, unlike a naive word counter, BM25 natively handles two critical realities:</p>
+        
+        <ol>
+          <li><strong>Document Frequency Penalty:</strong> If a word (like "the" or "error") appears in 90% of your documents, it carries zero information. BM25 discounts it heavily.</li>
+          <li><strong>Term Frequency Saturation:</strong> If a document repeats "router" 15 times, it isn't 15 times more relevant than a document that says it twice. BM25 caps the reward for repetition.</li>
+        </ol>
+
+        <p>Setting this up requires an explicit lexical retriever:</p>
+<pre><code>from langchain_community.retrievers import BM25Retriever
+bm25_retriever = BM25Retriever.from_texts(documents)</code></pre>
+
+        <h2>The Trap: Why You Can't Just Add Them</h2>
+        
+        <p>The intuitive approach to hybrid search is to run both retrievers, extract the relevance scores, and mash them together with a weight: <code>score = (0.5 * dense) + (0.5 * sparse)</code>.</p>
+        
+        <p>Do not do this.</p>
+        
+        <p>Dense cosine similarity scores are bounded—usually between <code>0.0</code> and <code>1.0</code>. BM25 scores are mathematically unbounded. Depending on keyword rarity and query length, a BM25 score can be <code>1.4</code>, <code>15.6</code>, or <code>86.0</code>.</p>
+        
+        <p>If you add them directly together, the unbounded BM25 score will completely overrun your dense search signal. Normalizing BM25 limits (via MinMax scaling) is notoriously fragile because a single outlier document with a massive score will crush the rest of your distribution into a tiny decimal range.</p>
+        
+        <p>We need a system that entirely ignores the absolute scores. Make way for Reciprocal Rank Fusion.</p>
+
+        <h2>The Solution: Reciprocal Rank Fusion (RRF)</h2>
+        
+        <p>Reciprocal Rank Fusion (RRF) is the current industry standard for merging disparate retrieval pipelines.</p>
+        
+        <p>Instead of looking at the magnitudes of the scores, we look exclusively at the ranking permutations. We take the rank of a document in the dense results, the rank of the document in the sparse results, and run them through a simple inversion formula.</p>
+
+        <blockquote>
+          <p><strong>TIP</strong><br>
+          The RRF Formula: <code>score = 1 / (k + rank)</code><br>
+          <code>k</code> is a smoothing constant. Standard practice defines <code>k = 60</code>.</p>
+        </blockquote>
+
+        <p>If Document A is Rank 1 in your Dense search, it scores <code>1 / (60 + 1) = 0.0163</code>.<br>
+        If it's also Rank 4 in your Sparse search, it gets an additional <code>1 / (60 + 4) = 0.0156</code>.<br>
+        <strong>Total RRF Score:</strong> <code>0.0319</code>.</p>
+        
+        <p>RRF works because it massively rewards documents that perform well across <em>both</em> ranking mechanisms, while smoothly decaying the score of documents that only appear in one.</p>
+
+        <h2>Merging the Streams: Step-By-Step</h2>
+        
+        <p>Let's walk through how to actually orchestrate this. We will extract the exact logic, and then show how abstraction handles it for you.</p>
+
+        <h3>Phase 1: Retrieve Independent Rankings</h3>
+        <p>First, you query both algorithms independently to get two separate sorted lists of results. Under the hood, this looks like extracting indexes based on highest similarity mathematically:</p>
+
+<pre><code># np.argsort sorts low-to-high, so [::-1] flips it to highest-score-first.
+sparse_ranks = { idx: rank + 1 for rank, idx in enumerate(np.argsort(sparse_scores)[::-1]) }
+dense_ranks = { idx: rank + 1 for rank, idx in enumerate(np.argsort(dense_scores)[::-1]) }</code></pre>
+
+        <h3>Phase 2: Compute the RRF</h3>
+        <p>Once you have the isolated ranks, you calculate the RRF fusion by iterating over every document that surfaced. You completely throw away the underlying cosine or TF-IDF metric and calculate purely based on position.</p>
+
+<pre><code>k = 60 
+rrf_scores = {}
+for i in range(len(documents)):
+    rrf_scores[i] = (1 / (k + sparse_ranks[i])) + (1 / (k + dense_ranks[i]))
+
+# The final hybrid ranking
+final_ranking = sorted(rrf_scores.keys(), key=lambda x: rrf_scores[x], reverse=True)</code></pre>
+
+        <h3>Phase 3: The Framework Level</h3>
+        <p>If you are building production systems, you don't want to maintain that sorting and looping logic manually for every query. This is exactly where abstractions like LangChain become valuable.</p>
+        
+        <p>LangChain abstracts the execution of both algorithms and handles the fusion scoring (often defaulting to an implemented RRF or weighted interpolation) using <code>EnsembleRetriever</code>.</p>
+
+<pre><code>from langchain.retrievers import EnsembleRetriever
+
+# Combine our previously initialized retrievers
+ensemble_retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, vector_retriever],
+    weights=[0.5, 0.5] # Weights dynamically bias the fusion mapping
+)
+
+# A single call fires both algorithms, calculates ranking logic, and returns top documents
+docs = ensemble_retriever.invoke("How do I reset my TX-9942-B router?")</code></pre>
+
+        <p>Notice how clean the architecture is.</p>
+        
+        <p>By separating the retrieval completely from the fusion logic, you decouple your architecture. The fusion logic doesn't care if you're using Pinecone, Chroma, or Postgres. It simply asks for a ranked list, processes the math, and returns the optimal intersection of lexical exactness and semantic intent.</p>
+        
+        <p>Stop throwing away exact keyword matches just because embeddings are trendy. Build Hybrid Search.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer"></footer>
+  </div><!-- /main-content -->
+</div><!-- /layout-wrap -->
+</body>
+</html>

@@ -1,27 +1,38 @@
 const root = document.documentElement;
 
-const applyTheme = (theme) => {
-  if (theme === "dark") {
-    root.setAttribute("data-theme", "dark");
+// ── Theme slider wiring ──────────────────────────────────────────────────
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    root.setAttribute('data-theme', 'dark');
   } else {
-    root.removeAttribute("data-theme");
+    root.removeAttribute('data-theme');
   }
-};
 
-// Apply stored theme before first paint
-const storedTheme = localStorage.getItem("theme");
-if (storedTheme) {
-  applyTheme(storedTheme);
+  // Update slider visual
+  const sunOpt  = document.getElementById('opt-light');
+  const moonOpt = document.getElementById('opt-dark');
+  if (sunOpt && moonOpt) {
+    sunOpt.classList.toggle('selected',  theme !== 'dark');
+    moonOpt.classList.toggle('selected', theme === 'dark');
+  }
 }
 
-// Wire up toggle button
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("theme-toggle");
-  if (!btn) return;
-  btn.addEventListener("click", () => {
-    const isDark = root.getAttribute("data-theme") === "dark";
-    const next = isDark ? "light" : "dark";
-    localStorage.setItem("theme", next);
-    applyTheme(next);
-  });
+
+// Apply immediately (before DOMContentLoaded) to avoid flash
+const storedTheme = localStorage.getItem('theme') || 'light';
+applyTheme(storedTheme);
+
+// ── Wire up ──────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  applyTheme(storedTheme);
+
+  const track = document.getElementById('theme-track');
+  if (track) {
+    track.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+  }
 });

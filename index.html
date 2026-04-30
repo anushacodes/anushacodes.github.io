@@ -1,113 +1,196 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Anusha Nandy</title>
-    <meta name="description" content="Data Scientist & Machine Learning Engineer. Building reliable, production-grade ML systems." />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <script src="theme.js" defer></script>
-  </head>
-  <body>
-    <header class="site-header">
-      <nav class="nav">
-        <a class="logo" href="index.html">Anusha Nandy</a>
-        <div class="nav-links">
-          <a href="index.html" class="active">Home</a>
-          <span class="nav-sep">/</span>
-          <a href="projects/index.html">Projects</a>
-          <span class="nav-sep">/</span>
-          <a href="blog/index.html">Blog</a>
-          <span class="nav-sep">/</span>
-          <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">GitHub</a>
-          <button class="theme-btn" id="theme-toggle" type="button" aria-label="Toggle theme">Theme</button>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" sizes="any" />
+  <link rel="shortcut icon" href="assets/favicon.svg?v=2" type="image/svg+xml" />
+  <title>Anusha Nandy</title>
+  <meta name="description"
+    content="Data Scientist & Machine Learning Engineer. Building reliable, production-grade ML systems." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="theme.js"></script>
+</head>
+
+<body>
+
+  <!-- Full-width rainbow bar -->
+  <div id="rainbow-bar"></div>
+
+  <!-- Theme toggle fixed top-right -->
+  <div class="theme-toggle">
+    <div class="toggle-track" id="theme-track" role="button" aria-label="Toggle theme" tabindex="0">
+      <div class="toggle-opt selected" id="opt-light"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg></div>
+      <div class="toggle-opt" id="opt-dark"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg></div>
+    </div>
+  </div>
+
+  <!-- ── Sidebar ── -->
+  <div class="layout-wrap">
+    <aside class="sidebar">
+      <nav class="sidebar-nav" aria-label="Site navigation">
+        <a href="index.html" class="active">home</a>
+        <a href="projects/index.html">projects</a>
+        <a href="blog/index.html">blog</a>
+        <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">github</a>
       </nav>
-    </header>
+    </aside>
 
-    <main class="page">
-      <section class="hero">
-        <div class="avatar-wrap">
-          <img src="assets/avatar-placeholder.svg" alt="Portrait of Anusha Nandy" />
-        </div>
-        <div class="hero-copy">
-          <p class="eyebrow">Data Scientist &amp; ML Engineer</p>
-          <h1>Anusha Nandy</h1>
-          <p class="lead">
-            I bridge experimental notebooks and production systems — finishing my M.S. in Data Science, 
-            turning theory into reliable, scalable tools.
+    <!-- ── Main ── -->
+    <div class="main-content">
+      <main class="page">
+
+        <section class="hero">
+          <div class="hero-copy">
+            <h1 class="hero-name">Anusha Nandy</h1>
+            <p class="hero-job">I'm a Data &amp; AI Engineer working at the intersection of data engineering, machine
+              learning, and generative AI.</p>
+            <p class="lead">
+              I like building things that are actually useful. Most of my work sits somewhere between messy real-world
+              data,
+              machine learning, and the engineering it takes to make a system <strong class="hl-red">reliable</strong>.
+            </p>
+            <div class="hero-links">
+              <a href="mailto:anusha.nandy1@gmail.com" class="link-email">Email</a>
+              <a href="https://www.linkedin.com/in/anusha-nandy/" target="_blank" rel="noreferrer"
+                class="link-linkedin">LinkedIn</a>
+              <a href="https://medium.com/@andylikestowrite" target="_blank" rel="noreferrer"
+                class="link-medium">Medium</a>
+            </div>
+          </div>
+          <div class="hero-avatar">
+            <div class="profile-container">
+              <img src="assets/me.png" alt="Anusha Nandy" class="profile-pic" />
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">About</h2>
+          <p>
+            I'm finishing my M.S. in Data Science, and I'm most interested in the part where ideas stop being
+            experiments
+            and start becoming real systems people can use.
           </p>
-          <div class="hero-links">
-            <a href="mailto:anusha.nandy1@gmail.com">Email</a>
-            <span class="sep">/</span>
-            <a href="https://www.linkedin.com/in/anusha-nandy/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <span class="sep">/</span>
-            <a href="https://medium.com/@andylikestowrite" target="_blank" rel="noreferrer">Medium</a>
-          </div>
-        </div>
-      </section>
+          <p>
+            I enjoy working across the stack, from cleaning and moving data to training models to figuring out how to
+            ship
+            something without it falling apart in production. Lately that has meant a mix of
+            <strong class="hl-blue">data engineering</strong>, machine learning, and generative AI.
+          </p>
+          <p>
+            What I like most is taking a vague or messy problem and turning it into something practical. That could be a
+            better pipeline, a model that helps people make decisions faster, or <strong class="hl-orange">agentic
+              AI</strong> that removes
+            repetitive work.
+          </p>
+        </section>
 
-      <section class="section">
-        <h2 class="section-title">About</h2>
-        <p>
-          I've always liked stories. For me, data science is a way of finding the truth hidden inside 
-          a mess of numbers. I operate at the intersection of data and engineering — student, engineer, 
-          and relentless troubleshooter.
-        </p>
-        <p>
-          I enjoy the logic puzzle of system design: stitching together infrastructure that supports 
-          real products. I'm looking for a team where I can ask a million questions, solve hard 
-          problems, and keep learning.
-        </p>
-      </section>
+        <section class="section">
+          <h2 class="section-title">Technical Expertise</h2>
 
-      <section class="section">
-        <div class="section-header">
-          <span class="section-title">Recent posts</span>
-          <a href="blog/index.html" class="see-all">See all</a>
-        </div>
-        <nav class="list" aria-label="Recent posts">
-          <a href="blog/sample-post/index.html" class="list-item">
-            <span class="item-title">Building ML Systems That Don't Drift</span>
-            <span class="item-date">Apr 2026</span>
-          </a>
-        </nav>
-      </section>
+          <div class="skills-table" style="display: flex; flex-direction: column; gap: 1.75rem; margin-top: 1.5rem;">
+            <style>
+              .skill-row {
+                display: flex;
+                gap: 2.5rem;
+                align-items: flex-start;
+              }
 
-      <section class="section">
-        <div class="section-header">
-          <span class="section-title">Projects</span>
-          <a href="projects/index.html" class="see-all">See all</a>
-        </div>
-        <div class="list">
-          <div class="project-item">
-            <div>
-              <div class="project-name">Real-Time Fraud Detection Pipeline</div>
-              <div class="project-desc">6K events/sec, sub-100ms latency, automated drift monitoring.</div>
+              .skill-row-title {
+                flex: 0 0 160px;
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: var(--text);
+                margin: 0;
+                text-align: right;
+                line-height: 1.6;
+              }
+
+              .skill-row-list {
+                flex: 1;
+                margin: 0;
+                color: var(--muted);
+                font-size: 0.9rem;
+                line-height: 1.6;
+              }
+
+              @media (max-width: 640px) {
+                .skill-row {
+                  flex-direction: column;
+                  gap: 0.25rem;
+                }
+
+                .skill-row-title {
+                  text-align: left;
+                  flex: auto;
+                }
+              }
+            </style>
+
+            <div class="skill-row">
+              <h3 class="skill-row-title">Agentic AI &amp; LLMs</h3>
+              <p class="skill-row-list">
+                Multi-agent orchestration with LangGraph, LangChain, CrewAI, RAG pipelines, vector databases, tool use,
+                MCP, prompt engineering and LLM evaluation
+              </p>
             </div>
-            <a href="#" class="project-link">GitHub ↗</a>
-          </div>
-          <div class="project-item">
-            <div>
-              <div class="project-name">RAG-based Chatbot for Document QA</div>
-              <div class="project-desc">LLAMA + structured citations for precise retrieval.</div>
-            </div>
-            <a href="#" class="project-link">GitHub ↗</a>
-          </div>
-          <div class="project-item">
-            <div>
-              <div class="project-name">Language Model from Scratch</div>
-              <div class="project-desc">22M-parameter Transformer in PyTorch with custom tokenization.</div>
-            </div>
-            <a href="#" class="project-link">GitHub ↗</a>
-          </div>
-        </div>
-      </section>
-    </main>
 
-    <footer class="site-footer"></footer>
-  </body>
+            <div class="skill-row">
+              <h3 class="skill-row-title">AI/ML Engineering</h3>
+              <p class="skill-row-list">
+                Python, PyTorch, Scikit-learn, NLP, classification, forecasting, FastAPI for model serving
+              </p>
+            </div>
+
+            <div class="skill-row">
+              <h3 class="skill-row-title">MLOps &amp; Deployment</h3>
+              <p class="skill-row-list">
+                MLflow, Docker, CI/CD basics, AWS and GCP for cloud-hosted models and pipelines
+              </p>
+            </div>
+
+            <div class="skill-row">
+              <h3 class="skill-row-title">Data Engineering</h3>
+              <p class="skill-row-list">
+                Snowflake, BigQuery, PostgreSQL, ETL pipelines, data modeling, Power BI dashboards
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            style="margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--muted);">
+            <strong style="font-weight: 500;">Currently exploring:</strong> Multimodal AI, real-time
+            inference, and AI safety
+          </div>
+        </section>
+
+      </main>
+      <footer class="site-footer"></footer>
+    </div>
+  </div><!-- /layout-wrap -->
+
+</body>
+
 </html>

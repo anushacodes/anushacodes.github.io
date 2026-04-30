@@ -1,95 +1,114 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Projects — Anusha Nandy</title>
-    <meta name="description" content="Selected ML engineering and data science projects." />
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <script src="../theme.js" defer></script>
-  </head>
-  <body>
-    <header class="site-header">
-      <nav class="nav">
-        <a class="logo" href="../index.html">Anusha Nandy</a>
-        <div class="nav-links">
-          <a href="../index.html">Home</a>
-          <span class="nav-sep">/</span>
-          <a href="index.html" class="active">Projects</a>
-          <span class="nav-sep">/</span>
-          <a href="../blog/index.html">Blog</a>
-          <span class="nav-sep">/</span>
-          <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">GitHub</a>
-          <button class="theme-btn" id="theme-toggle" type="button" aria-label="Toggle theme">Theme</button>
-        </div>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects — Anusha Nandy</title>
+  <meta name="description" content="Selected ML engineering and data science projects." />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="../theme.js"></script>
+  <style>
+    /* Projects list: Clean text-only layout */
+  </style>
+</head>
+<body>
 
+  <div id="rainbow-bar"></div>
+
+  <div class="theme-toggle">
+    <div class="toggle-track" id="theme-track" role="button" aria-label="Toggle theme" tabindex="0">
+      <div class="toggle-opt selected" id="opt-light"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+      <div class="toggle-opt" id="opt-dark"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+    </div>
+  </div>
+
+<div class="layout-wrap">
+  <aside class="sidebar">
+    <nav class="sidebar-nav" aria-label="Site navigation">
+      <a href="../index.html">home</a>
+      <a href="../projects/index.html" class="active">projects</a>
+      <a href="../blog/index.html">blog</a>
+      <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">github</a>
+    </nav>
+  </aside>
+
+  <div class="main-content">
     <main class="page">
       <h1 class="page-title">Projects</h1>
       <p class="page-desc">Selected work focused on real-world ML systems.</p>
 
-      <div class="list" role="list">
-        <div class="project-item" role="listitem">
-          <div>
-            <div class="project-name">Real-Time Fraud Detection Pipeline</div>
-            <div class="project-desc">
-              Built a real-time fraud detection pipeline processing ~6K events/sec with 
-              sub-100ms latency and automated drift monitoring.
-            </div>
+<div class="project-list-group">
+        <!-- Apollo Healthcare Agent -->
+        <a href="https://github.com/anushacodes/apollo-healthcare-agent" target="_blank" rel="noreferrer" class="project-row">
+          <div class="project-row-left">
+            <h2 class="project-row-title">Apollo Healthcare Agent</h2>
+            <div class="project-row-desc">An AI-powered healthcare agent for answering medical queries and streamlining patient interactions.</div>
+            <div class="project-row-tools">Python · LLMs · LangChain</div>
           </div>
-          <a href="#" class="project-link" aria-label="Real-Time Fraud Detection Pipeline on GitHub">GitHub ↗</a>
-        </div>
+          <div class="project-row-right">
+            <span class="project-arrow">↗</span>
+          </div>
+        </a>
 
-        <div class="project-item" role="listitem">
-          <div>
-            <div class="project-name">RAG-based Chatbot for Document QA</div>
-            <div class="project-desc">
-              Production-grade RAG pipeline integrating LLAMA with structured citations to 
-              improve retrieval precision and reduce hallucinations.
-            </div>
+        <!-- Tennis Analysis with CV -->
+        <a href="https://github.com/anushacodes/tennis-analysis-with-cv" target="_blank" rel="noreferrer" class="project-row">
+          <div class="project-row-left">
+            <h2 class="project-row-title">Tennis Match Analysis</h2>
+            <div class="project-row-desc">Computer vision pipeline for tracking players, detecting ball trajectory, and analyzing match statistics.</div>
+            <div class="project-row-tools">OpenCV · PyTorch · YOLO</div>
           </div>
-          <a href="#" class="project-link" aria-label="RAG Chatbot on GitHub">GitHub ↗</a>
-        </div>
+          <div class="project-row-right">
+            <span class="project-arrow">↗</span>
+          </div>
+        </a>
 
-        <div class="project-item" role="listitem">
-          <div>
-            <div class="project-name">Language Model from Scratch</div>
-            <div class="project-desc">
-              Trained a 22M-parameter Transformer LM in PyTorch with custom 
-              tokenization, attention, and training loop.
-            </div>
+        <!-- E-Commerce Data Warehouse -->
+        <a href="https://github.com/anushacodes/Ecommerce-data-warehouse" target="_blank" rel="noreferrer" class="project-row">
+          <div class="project-row-left">
+            <h2 class="project-row-title">E-Commerce Data Warehouse</h2>
+            <div class="project-row-desc">Scalable data warehouse architecture for an e-commerce platform, enabling advanced analytics and reporting.</div>
+            <div class="project-row-tools">SQL · dbt · Airflow · PostgreSQL</div>
           </div>
-          <a href="#" class="project-link" aria-label="Language Model on GitHub">GitHub ↗</a>
-        </div>
+          <div class="project-row-right">
+            <span class="project-arrow">↗</span>
+          </div>
+        </a>
 
-        <div class="project-item" role="listitem">
-          <div>
-            <div class="project-name">Personalised Book Recommendation</div>
-            <div class="project-desc">
-              Scalable retrieval-based recommender using implicit feedback with 
-              a two-tower neural architecture and FAISS KNN.
-            </div>
+        <!-- Stock Market App -->
+        <a href="https://github.com/anushacodes/stock-market-app" target="_blank" rel="noreferrer" class="project-row">
+          <div class="project-row-left">
+            <h2 class="project-row-title">Stock Market Tracker App</h2>
+            <div class="project-row-desc">Real-time stock market tracking application with interactive financial data visualization.</div>
+            <div class="project-row-tools">Python · Pandas · Streamlit</div>
           </div>
-          <a href="#" class="project-link" aria-label="Book Recommendation on GitHub">GitHub ↗</a>
-        </div>
+          <div class="project-row-right">
+            <span class="project-arrow">↗</span>
+          </div>
+        </a>
 
-        <div class="project-item" role="listitem">
-          <div>
-            <div class="project-name">Multitask BERT for Spam Detection</div>
-            <div class="project-desc">
-              Fine-tuned BERT jointly for spam detection, sentiment analysis, and 
-              toxicity classification — 96.9% accuracy.
-            </div>
+        <!-- Wordle Game -->
+        <a href="https://github.com/anushacodes/Wordle-game" target="_blank" rel="noreferrer" class="project-row">
+          <div class="project-row-left">
+            <h2 class="project-row-title">Wordle Game Clone</h2>
+            <div class="project-row-desc">A fully functional programmatic recreation of the popular daily word puzzle game.</div>
+            <div class="project-row-tools">Python · Algorithms</div>
           </div>
-          <a href="#" class="project-link" aria-label="BERT Spam Detection on GitHub">GitHub ↗</a>
-        </div>
+          <div class="project-row-right">
+            <span class="project-arrow">↗</span>
+          </div>
+        </a>
+      </div>
+      
+      <div style="margin-top: 3rem; text-align: center;">
+        <a href="https://github.com/anushacodes?tab=repositories" target="_blank" rel="noreferrer" class="see-all">View all repositories on GitHub &rarr;</a>
       </div>
     </main>
-
     <footer class="site-footer"></footer>
-  </body>
+  </div><!-- /main-content -->
+</div><!-- /layout-wrap -->
+
+</body>
 </html>

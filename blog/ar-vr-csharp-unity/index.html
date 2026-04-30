@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>From C# Basics to Unity AR/VR — Class Notes, Structured - Anusha Nandy</title>
+  <meta name="description"
+    content="A structured walkthrough of my AR/VR class notes: C# fundamentals, OOP, and how those concepts map into Unity scripting." />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="../../theme.js"></script>
+</head>
+
+<body>
+
+  <div id="rainbow-bar"></div>
+
+  <div class="theme-toggle">
+    <div class="toggle-track" id="theme-track" role="button" aria-label="Toggle theme" tabindex="0">
+      <div class="toggle-opt selected" id="opt-light"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg></div>
+      <div class="toggle-opt" id="opt-dark"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg></div>
+    </div>
+  </div>
+
+  <div class="layout-wrap">
+    <aside class="sidebar">
+      <nav class="sidebar-nav" aria-label="Site navigation">
+        <a href="../../index.html">home</a>
+        <a href="../../projects/index.html">projects</a>
+        <a href="../../blog/index.html" class="active">blog</a>
+        <a href="https://github.com/anushacodes" target="_blank" rel="noreferrer">github</a>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <main class="page">
+        <a href="../index.html" class="back-link">← Blog</a>
+
+        <article>
+          <div class="post-header">
+            <h1>From C# Basics to Unity AR/VR: Class Notes, Structured</h1>
+            <p class="post-meta">Apr 2024</p>
+            <div style="display:flex;gap:0.35rem;margin-top:0.15rem;flex-wrap:wrap">
+              <span
+                style="font-size:0.7rem;color:var(--muted);background:var(--hover-bg);border:1px solid var(--border);border-radius:999px;padding:1px 8px">arvr</span>
+              <span
+                style="font-size:0.7rem;color:var(--muted);background:var(--hover-bg);border:1px solid var(--border);border-radius:999px;padding:1px 8px">unity</span>
+              <span
+                style="font-size:0.7rem;color:var(--muted);background:var(--hover-bg);border:1px solid var(--border);border-radius:999px;padding:1px 8px">csharp</span>
+            </div>
+          </div>
+
+          <div class="post-body">
+<h1>Learning C# and Unity for AR/VR — Class Notes</h1>
+<p>A running log of concepts from my AR/VR course, covering C# fundamentals through Unity integration.</p>
+<hr />
+<h2>C# Basics — Hello World and Program Structure</h2>
+<p>The first thing we looked at was the anatomy of a basic C# program. Everything lives inside a <strong>namespace</strong>, which contains a <strong>class</strong>, which contains the <strong>Main method</strong> — that&#x27;s your entry point.</p>
+<pre><code class="language-csharp">
+using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Hello World!&quot;);
+        }
+    }
+}
+</code></pre>
+<p>The hierarchy goes: <strong>Classes → Namespaces → Assembly → Application</strong>. An <em>assembly</em> is a collection of related namespaces and includes either DLLs or executables.</p>
+<ul>
+<li><p><strong>DLL (Dynamically Linked Library):</strong> Independently linkable, loaded only when needed.</p></li>
+<li><p><strong>EXE (Executable):</strong> Standalone, bundles everything it needs.</p></li>
+</ul>
+<p>Namespaces are basically collections of classes used to group related things together — similar to libraries. You pull them in with <code>using</code>:</p>
+<pre><code class="language-csharp">
+using System;
+using System.IO;
+</code></pre>
+<hr />
+<h2>.NET Framework and the CLR</h2>
+<p>C# compiles to an <strong>Intermediate Language (IL)</strong> rather than directly to machine code. The IL then gets compiled to native code at runtime by the <strong>CLR (Common Language Runtime)</strong>. This is the same idea as Java&#x27;s bytecode and JIT compilation — Microsoft borrowed a lot from Java here.</p>
+<p>Why IL? Because machine language varies by hardware. IL is portable — shorter to compile than starting from source, and the IL code isn&#x27;t human-readable, which gives some privacy to your logic.</p>
+<p><strong>Compilation flow:</strong> Source Code → IL → Native/Machine Code</p>
+<p>To set up the dev environment in VS Code, you need the C# dev kit, Code Runner, and the .NET SDK. Creating and running a project:</p>
+<pre><code class="language-bash">
+dotnet new console -n MyNewProject
+cd MyNewProject
+dotnet run
+</code></pre>
+<hr />
+<h2>Data Types in C#</h2>
+<p>C# <code>char</code> is <strong>Unicode</strong> (2 bytes), so it can store characters from any language. This is different from ASCII (1 byte, only 256 characters — basically English and punctuation).</p>
+<ul>
+<li><p>String literals use <strong>double quotes</strong>: <code>&quot;hello&quot;</code></p></li>
+<li><p>Char literals use <strong>single quotes</strong>: <code>&#x27;a&#x27;</code></p></li>
+</ul>
+<p>Always assign a value to a variable before using it — the compiler will complain otherwise.</p>
+<h3>The <code>var</code> Keyword</h3>
+<p><code>var</code> is a generalized variable type that works for both primitive and non-primitive types — the compiler infers the type from what you assign to it. You can use it anywhere: loop counters, class instances, collections.</p>
+<pre><code class="language-csharp">
+var i = 0;                        // inferred as int
+var name = &quot;abc&quot;;                 // inferred as string
+var s1 = new Student();           // works for class instances too
+var numbers = new List&lt;int&gt;();    // and collections
+</code></pre>
+<p>Especially handy in <code>for</code> and <code>foreach</code> loops:</p>
+<pre><code class="language-csharp">
+for (var i = 0; i &lt; 10; i++) { ... }
+foreach (var number in array) { ... }
+</code></pre>
+<h3>Type Conversion</h3>
+<p>Three ways to convert between types:</p>
+<ol>
+<li><p><strong>Implicit casting</strong> — automatic, smaller → larger type:<br /><code>char → int → long → float → double</code></p></li>
+<li><p><strong>Explicit casting</strong> — manual, larger → smaller type:<br /><code>double → float → long → int → char</code></p></li>
+<li><p><strong>Conversion functions</strong> — for incompatible types (like string → int):</p>
+<pre><code class="language-csharp">
+Convert.ToInt32(&quot;42&quot;);
+int.Parse(&quot;42&quot;);
+</code></pre></li>
+</ol>
+<blockquote><p><code>int</code> to <code>byte</code> = explicit. <code>float</code> to <code>int</code> = explicit. But <code>string</code> to <code>int</code> can&#x27;t be done with casting at all — you need <code>Convert.ToInt32()</code> or <code>int.Parse()</code>.</p></blockquote>
+<h3>Constants vs Static</h3>
+<ul>
+<li><p><strong><code>const</code></strong>: Value is fixed at compile time, never changes.</p></li>
+<li><p><strong><code>static</code></strong>: Variable persists in memory for the entire program&#x27;s lifetime, not just the scope of a function. A regular local variable gets wiped once you leave its function. A static one sticks around.</p></li>
+</ul>
+<hr />
+<h2>Operators</h2>
+<h3>Arithmetic</h3>
+<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulus), <code>++</code> (increment), <code>--</code> (decrement)</p>
+<p>If even one operand is a <code>float</code>, the whole operation becomes a float. But if both are <code>int</code>, the result is an <code>int</code> even if you&#x27;re storing it in a <code>float</code>.</p>
+<pre><code class="language-csharp">
+float z = 5 / 2;      // z = 2 (both ints, integer division)
+float z = 5 / 2.0f;   // z = 2.5 (one is float)
+</code></pre>
+<p><strong>Pre vs Post increment:</strong></p>
+<pre><code class="language-csharp">
+int a = 5;
+int b = a++;  // b = 5, then a becomes 6 (assign first, then increment)
+int c = ++a;  // a becomes 7, then c = 7 (increment first, then assign)
+</code></pre>
+<p>Note: increment/decrement and <code>!</code> (NOT) are <strong>unary</strong> operators — they only take one operand.</p>
+<h3>String Concatenation with <code>+</code></h3>
+<p>The <code>+</code> operator doubles as a string concatenation operator when one of the operands is a string. Works with numbers — but <em>not</em> with <code>char</code>.</p>
+<pre><code class="language-csharp">
+string result = &quot;Score: &quot; + 42;    // works — &quot;Score: 42&quot;
+string result = &quot;Hi&quot; + &#x27;A&#x27;;        // does NOT concat — &#x27;A&#x27; is a char, behaves differently
+</code></pre>
+<h3>Logical</h3>
+<p><code>||</code> (OR), <code>&amp;&amp;</code> (AND), <code>!</code> (NOT) — in C#, these only work on <code>bool</code> values, unlike C where you could use them on numbers.</p>
+<h3>Bitwise</h3>
+<p><code>&amp;</code> (AND), <code>|</code> (OR) — these operate on the binary representation of integers, but you pass normal ints and get ints back.</p>
+<pre><code>
+5 &amp; 2 = 0    (101 &amp; 010 = 000)
+5 &amp; 3 = 1    (101 &amp; 011 = 001)
+5 | 2 = 7    (101 | 010 = 111)
+</code></pre>
+<p>A useful trick: to check if a number N is odd or even, use <code>N &amp; 1</code>. If the result is <code>1</code>, it&#x27;s odd; <code>0</code>, it&#x27;s even.</p>
+<h3>Ternary (Shorthand if-else)</h3>
+<pre><code class="language-csharp">
+int max = n1 &gt; n2 ? n1 : n2;
+</code></pre>
+<p>Takes three arguments: condition, value if true, value if false.</p>
+<hr />
+<h2>Control Flow</h2>
+<h3>Input/Output</h3>
+<pre><code class="language-csharp">
+Console.WriteLine(&quot;output&quot;);        // Output
+string input = Console.ReadLine();  // Input — always reads as string, no matter what
+int num = Convert.ToInt32(input);   // Convert if needed
+</code></pre>
+<blockquote><p><code>Console.ReadLine()</code> always returns a <code>string</code> — even if you declared the variable as <code>int</code>. You <em>must</em> convert it explicitly. This trips people up a lot.</p></blockquote>
+<h3>Loops</h3>
+<p><strong><code>for</code></strong> — when you know the iteration count:</p>
+<pre><code class="language-csharp">
+for (int i = 0; i &lt; 10; i++) { ... }
+</code></pre>
+<p><strong><code>while</code></strong> — when you don&#x27;t know how long you&#x27;ll loop:</p>
+<pre><code class="language-csharp">
+while (condition) { ... }
+</code></pre>
+<p><strong><code>do-while</code></strong> — executes at least once, even if condition is false on the first check.</p>
+<p><strong><code>foreach</code></strong> — use this specifically when you <em>don&#x27;t need</em> start/stop index variables. You just want every element, nothing more:</p>
+<pre><code class="language-csharp">
+foreach (var number in array) { ... }
+</code></pre>
+<p>Similar to Python&#x27;s <code>for x in list</code> — you get values directly, no index math needed.</p>
+<hr />
+<h2>Classic Loop Problems</h2>
+<h3>Count Digits in N</h3>
+<pre><code>
+while number != 0:
+    count += 1
+    number = number / 10  (integer division)
+print count
+</code></pre>
+<h3>Sum of Digits in N</h3>
+<pre><code>
+sum = 0
+while number != 0:
+    digit = number % 10
+    sum += digit
+    number = number / 10
+print sum
+</code></pre>
+<h3>Armstrong Number Check</h3>
+<p>A number where the sum of the cubes of its digits equals the original number (e.g., 153 = 1³ + 5³ + 3³).</p>
+<pre><code>
+sum = 0
+while number != 0:
+    digit = number % 10
+    sum += digit³
+    number = number / 10
+if sum == original: yes, else: no
+</code></pre>
+<hr />
+<h2>Scope of Variables</h2>
+<p>A variable is only visible to the block it&#x27;s declared in and any blocks <em>nested inside</em> it — not to the parent block above it.</p>
+<pre><code class="language-csharp">
+void Main() {
+    int x = 10;          // visible here and in any inner blocks
+    if (true) {
+        int y = 20;      // only visible inside this if-block
+        Console.WriteLine(x);  // fine — x is from a parent block
+    }
+    Console.WriteLine(y);  // ERROR — y is out of scope here
+}
+</code></pre>
+<p>The rule: inner blocks can see outward, but outer blocks can&#x27;t see inward.</p>
+<hr />
+<p><strong>Primitive types:</strong> <code>int</code>, <code>char</code>, <code>float</code>, <code>double</code></p>
+<p><strong>Derived types:</strong></p>
+<ul>
+<li><p><strong>Arrays</strong> — homogeneous (same type)</p></li>
+<li><p><strong>Structs</strong> — heterogeneous (mixed types)</p></li>
+</ul>
+<pre><code class="language-c">
+struct Point {
+    int x;
+    int y;
+};
+
+struct Point p1 = {0, 1};
+printf(&quot;(%d, %d)\n&quot;, p1.x, p1.y);
+</code></pre>
+<p>A struct lets you create a user-defined data type that groups different kinds of data together — something an array can&#x27;t do.</p>
+<hr />
+<h2>Classes and Object-Oriented Programming</h2>
+<p>A <strong>class</strong> is a blueprint. An <strong>object</strong> is an instance of that class. Think of universals vs particulars — the class is the universal concept, objects are the specific instances.</p>
+<pre><code class="language-csharp">
+public class Animal {
+    public string name;
+    public void Speak() {
+        Console.WriteLine(name + &quot; speaks.&quot;);
+    }
+}
+
+Animal dog = new Animal();
+dog.name = &quot;Dog&quot;;
+dog.Speak();
+</code></pre>
+<p><code>new Animal()</code> allocates space in memory for the object — similar to <code>malloc</code> in C, but you don&#x27;t have to manually free it.</p>
+<h3>Attributes and Methods</h3>
+<p>A <strong>method</strong> is a function that belongs to a class. The difference: methods can access and modify the class&#x27;s internal data.</p>
+<pre><code class="language-csharp">
+public class Calculator {
+    private int result;
+
+    public int Add(int number) {
+        result += number;
+        return result;
+    }
+}
+</code></pre>
+<p><code>void</code> means the method doesn&#x27;t return anything — just runs and exits. Note: <em>printing</em> and <em>returning</em> are different things.</p>
+<h3><code>public</code> vs <code>static</code> members</h3>
+<ul>
+<li><p><code>public int age</code> — accessible via an instance (<code>p1.age</code>)</p></li>
+<li><p><code>public static int count</code> — accessible directly from the class (<code>Person.count</code>), not through an instance</p></li>
+</ul>
+<hr />
+<h2>Constructors</h2>
+<p>A constructor is a special method that runs automatically when an object is created. Rules:</p>
+<ul>
+<li><p>Same name as the class</p></li>
+<li><p>No return type</p></li>
+</ul>
+<pre><code class="language-csharp">
+public class Student {
+    public string name;
+    public int age;
+    public int semester;
+    public List&lt;Course&gt; courseList;
+
+    // Default constructor
+    public Student() {
+        semester = 8;
+        courseList = new List&lt;Course&gt;();
+    }
+
+    // Constructor with semester override
+    public Student(int sem) : this() {
+        this.semester = sem;
+    }
+
+    // Full constructor
+    public Student(string name, int age, int sem) : this(sem) {
+        this.name = name;
+        this.age = age;
+    }
+}
+</code></pre>
+<p>A few things worth noting:</p>
+<ul>
+<li><p>You can&#x27;t assign default values directly in the field declaration inside a class. That&#x27;s what constructors are for.</p></li>
+<li><p>Default values for common types if not set: <code>int</code> → 0, <code>bool</code> → false, <code>string</code> → null.</p></li>
+<li><p>Non-primitive types like <code>List&lt;&gt;</code> need explicit memory allocation (<code>new List&lt;Course&gt;()</code>) — constructors are the right place for this.</p></li>
+<li><p><strong><code>this</code></strong> refers to the current instance. It&#x27;s also used to chain constructors using <code>: this()</code>.</p></li>
+<li><p><strong>Constructor signatures</strong> must differ — no two constructors can have the exact same parameters.</p></li>
+</ul>
+<p>Adding courses to a student&#x27;s list:</p>
+<pre><code class="language-csharp">
+s1.courseList = new List&lt;Course&gt;();
+s1.courseList.Add(c1);
+s1.courseList.Add(c3);
+</code></pre>
+<p>Or initialize inside the constructor so it&#x27;s automatic.</p>
+<hr />
+<h2>Access Modifiers and Encapsulation</h2>
+<p>The five access modifiers in C#:</p>
+<ol>
+<li><p><code>public</code></p></li>
+<li><p><code>private</code></p></li>
+<li><p><code>protected</code></p></li>
+<li><p><code>internal</code></p></li>
+<li><p><code>protected internal</code></p></li>
+</ol>
+<p><strong>Encapsulation</strong> (information hiding) is one of OOP&#x27;s core principles — you restrict direct access to an object&#x27;s internal data and expose it only through controlled methods.</p>
+<p>The pattern: declare fields as <code>private</code>, provide <code>public</code> getter/setter methods.</p>
+<pre><code class="language-csharp">
+public class Person {
+    private string name;
+    private byte age;
+
+    public void SetName(string name) {
+        if (!String.IsNullOrEmpty(name))
+            this.name = name;
+    }
+
+    public string GetName() {
+        return name;
+    }
+}
+
+Person p1 = new Person();
+p1.SetName(&quot;abc&quot;);
+Console.WriteLine(p1.GetName());
+</code></pre>
+<p>This way, you can add validation logic inside the setter — you control what values actually get stored.</p>
+<hr />
+<h2>Inheritance</h2>
+<p><strong>Inheritance</strong> lets a class (child/derived/subclass) acquire the properties and behavior of another class (parent/base/superclass). The relationship is &quot;is-a&quot; — a Car <em>is a</em> Vehicle.</p>
+<pre><code class="language-csharp">
+public class PresentationObject {
+    public double width;
+    public double height;
+}
+
+public class Text : PresentationObject { }
+
+public class Image : PresentationObject {
+    public void Crop() {
+        Console.WriteLine(&quot;Cropped image.&quot;);
+    }
+    public void Copy() {
+        Console.WriteLine(&quot;Copied image.&quot;);
+    }
+    public void Paste() {
+        Console.WriteLine(&quot;Pasted image.&quot;);
+    }
+}
+</code></pre>
+<p><code>Text</code> and <code>Image</code> both inherit <code>width</code> and <code>height</code> from <code>PresentationObject</code> without redefining them.</p>
+<p>OOP&#x27;s three main characteristics:</p>
+<ol>
+<li><p><strong>Encapsulation</strong> — hide internal data, expose via methods</p></li>
+<li><p><strong>Inheritance</strong> — reuse and extend existing classes</p></li>
+<li><p><strong>Polymorphism</strong> — same interface, different behavior</p></li>
+</ol>
+<hr />
+<h2>Unity Integration</h2>
+<h3>How C# Connects to Unity</h3>
+<p>Unity scripts inherit from <code>MonoBehaviour</code>. The two core methods are:</p>
+<ul>
+<li><p><strong><code>Start()</code></strong> — runs once when the object is first activated. Use it for initialization: setting position, material color (takes 4 arguments: R, G, B, transparency), and scale. <code>Vector3.one</code> is shorthand for <code>(1, 1, 1)</code> — so scaling by <code>Vector3.one * 1.3f</code> scales the object to 1.3× uniformly across all axes.</p></li>
+<li><p><strong><code>Update()</code></strong> — runs every frame. This is where real-time behavior lives — movement, rotation, input detection.</p></li>
+</ul>
+<p>Instead of writing a <code>for</code> loop to do something repeatedly, you put it in <code>Update()</code> and Unity handles the frame-by-frame execution.</p>
+<h3>Transforms and Rotation</h3>
+<pre><code class="language-csharp">
+void Update() {
+    transform.Rotate(10f * Time.deltaTime, 0.0f, 0.0f);
+}
+</code></pre>
+<ul>
+<li><p><code>Time.deltaTime</code> — the time elapsed since the last frame. This keeps movement frame-rate independent.</p></li>
+<li><p><code>10f</code> is the total rotation angle. The math works out to <code>(10 * deltaTime)</code> degrees per frame, so speed is consistent regardless of frame rate.</p></li>
+<li><p>The three arguments are rotation along X, Y, Z axes. The above only rotates on X.</p></li>
+</ul>
+<h3>Accessing Nested Members</h3>
+<p>You can chain member access deeper than one level:</p>
+<pre><code class="language-csharp">
+transform.position.x       // the x component of a transform&#x27;s position
+line.p1.x                  // x of the first point of a line
+</code></pre>
+<h3>Unity&#x27;s Class Hierarchy</h3>
+<p><code>GameObject</code> is a child of Unity&#x27;s <code>Object</code> class (not the same as C#&#x27;s base <code>Object</code> class). The [Unity Scripting API](https://docs.unity3d.com/Manual/ScriptingImportantClasses.html) has the full hierarchy.</p>
+<p><strong>Rigidbody</strong> component adds physics (gravity) to a GameObject.</p>
+<h3>Plane Movement Example</h3>
+<p>Two equivalent ways to rotate a plane using the vertical input axis:</p>
+<pre><code class="language-csharp">
+// Option 1
+transform.Rotate(Vector3.right * verticalInput * rotationSpeed * Time.deltaTime * -1);
+
+// Option 2 (same result, different axis)
+transform.Rotate(Vector3.left * verticalInput * rotationSpeed * Time.deltaTime);
+</code></pre>
+<hr />
+<p><em>C# and Unity fundamentals — from Hello World to game object transforms.</em></p>
+          </div>
+        </article>
+      </main>
+
+      <footer class="site-footer"></footer>
+    </div>
+  </div>
+</body>
+
+</html>
